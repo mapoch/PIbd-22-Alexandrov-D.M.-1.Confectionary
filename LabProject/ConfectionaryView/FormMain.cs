@@ -119,5 +119,17 @@ namespace ConfectionaryView
                 }
             }
         }
+
+        private void складыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormWarehouses>();
+            form.ShowDialog();
+        }
+
+        private void пополнитьСкладToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormReplenish>();
+            form.ShowDialog();
+        }
     }
 }
