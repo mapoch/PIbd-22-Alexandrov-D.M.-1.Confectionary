@@ -8,7 +8,7 @@ using Unity.Lifetime;
 using ConfectionaryBusinessLogic.BusinessLogics;
 using ConfectionaryContracts.BusinessLogicContracts;
 using ConfectionaryContracts.StoragesContracts;
-using ConfectionaryListImplement.Implements;
+using ConfectionaryFileImplement.Implements;
 
 namespace ConfectionaryView
 {
@@ -35,7 +35,7 @@ namespace ConfectionaryView
 
             currentContainer.RegisterType<IComponentStorage, ComponentStorage>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IOrderStorage, OrderStorage>(new HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IPastryStorage, PastriesStorage>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IPastryStorage, PastryStorage>(new HierarchicalLifetimeManager());
 
             currentContainer.RegisterType<IComponentLogic, ComponentLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IOrderLogic, OrderLogic>(new HierarchicalLifetimeManager());

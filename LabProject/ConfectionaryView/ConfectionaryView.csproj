@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ConfectionaryBusinessLogic\ConfectionaryBusinessLogic.csproj" />
+    <ProjectReference Include="..\ConfectionaryFileImplement\ConfectionaryFileImplement.csproj" />
     <ProjectReference Include="..\ConfectionaryListImplement\ConfectionaryListImplement.csproj" />
   </ItemGroup>
 
