@@ -33,7 +33,7 @@ namespace ConfectionaryFileImplement
             return instance;
         }
 
-        ~FileDataListSingleton()
+        public void SaveData()
         {
             SaveComponents();
             SaveOrders();

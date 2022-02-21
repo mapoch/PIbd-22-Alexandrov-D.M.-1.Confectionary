@@ -5,7 +5,6 @@ using System.Linq;
 using ConfectionaryContracts.BindingModels;
 using ConfectionaryContracts.StoragesContracts;
 using ConfectionaryContracts.ViewModels;
-using ConfectionaryContracts.Enums;
 using ConfectionaryFileImplement.Models;
 
 namespace ConfectionaryFileImplement.Implements
