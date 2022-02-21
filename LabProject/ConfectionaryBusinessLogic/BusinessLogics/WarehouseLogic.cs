@@ -40,6 +40,7 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
             }
             else
             {
+                if (element != null) throw new Exception("Уже есть такой склад");
                 model.DateCreate = DateTime.Now;
                 warehouseStorage.Insert(model);
             }
