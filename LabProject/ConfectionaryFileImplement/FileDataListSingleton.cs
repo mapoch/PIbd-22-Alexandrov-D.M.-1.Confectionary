@@ -245,6 +245,9 @@ namespace ConfectionaryFileImplement
                         new XElement("DateCreate", warehouse.DateCreate),
                         storedComponents));
                 }
+
+                var xDocument = new XDocument(xElement);
+                xDocument.Save(WarehouseFileName);
             }
         }
     }
