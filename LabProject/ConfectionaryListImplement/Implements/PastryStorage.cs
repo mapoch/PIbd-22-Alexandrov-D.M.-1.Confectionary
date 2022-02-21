@@ -8,11 +8,11 @@ using ConfectionaryListImplement.Models;
 
 namespace ConfectionaryListImplement.Implements
 {
-    public class PastriesStorage : IPastryStorage
+    public class PastryStorage : IPastryStorage
     {
         private readonly DataListSingleton source;
 
-        public PastriesStorage()
+        public PastryStorage()
         {
             source = DataListSingleton.GetInstance();
         }
