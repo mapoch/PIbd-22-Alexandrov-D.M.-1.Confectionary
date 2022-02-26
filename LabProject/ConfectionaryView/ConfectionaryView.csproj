@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <StartupObject>ConfectionaryView.Program</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Unity" Version="5.11.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ConfectionaryBusinessLogic\ConfectionaryBusinessLogic.csproj" />
+    <ProjectReference Include="..\ConfectionaryListImplement\ConfectionaryListImplement.csproj" />
+  </ItemGroup>
+
+</Project>
