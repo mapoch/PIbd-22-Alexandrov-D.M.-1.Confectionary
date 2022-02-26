@@ -103,7 +103,11 @@ namespace ConfectionaryListImplement.Implements
             string pastryName = null;
             foreach (Pastry pastry in source.Pastries)
             {
-                if (pastry.Id == order.PastryId) pastryName = pastry.PastryName;
+                if (pastry.Id == order.PastryId)
+                {
+                    pastryName = pastry.PastryName;
+                    break;
+                }
             }
             return new OrderViewModel { Id = order.Id,
                 PastryId = order.PastryId,
