@@ -12,10 +12,12 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
     public class OrderLogic : IOrderLogic
     {
         private readonly IOrderStorage orderStorage;
+        private readonly IWarehouseStorage warehouseStorage;
 
-        public OrderLogic(IOrderStorage _orderStorage)
+        public OrderLogic(IOrderStorage _orderStorage, IWarehouseStorage _warehouseStorage)
         {
             orderStorage = _orderStorage;
+            warehouseStorage = _warehouseStorage;
         }
 
         public List<OrderViewModel> Read(OrderBindingModel model)
@@ -46,10 +48,21 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
             if (element == null) throw new Exception("Элемент не найден");
 
             if (!element.Status.Contains(OrderStatus.Принят.ToString())) throw new Exception("Не в статусе \"Принят\"");
-            
-            orderStorage.Update(new OrderBindingModel { Id = model.OrderId, Status = OrderStatus.Выполняется, PastryId = element.PastryId,
-                Count = element.Count, Sum = element.Sum, DateCreate = element.DateCreate, DateImplement = DateTime.Now
-            });
+
+            OrderBindingModel order = new OrderBindingModel
+            {
+                Id = model.OrderId,
+                Status = OrderStatus.Выполняется,
+                PastryId = element.PastryId,
+                Count = element.Count,
+                Sum = element.Sum,
+                DateCreate = element.DateCreate,
+                DateImplement = DateTime.Now
+            };
+
+            if (!warehouseStorage.IsEnough(order)) throw new Exception("На складах недостаёт компонентов");
+
+            orderStorage.Update(order);
         }
 
         public void FinishOrder(ChangeStatusBindingModel model)

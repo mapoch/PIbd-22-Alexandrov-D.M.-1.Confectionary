@@ -92,6 +92,11 @@ namespace ConfectionaryListImplement.Implements
             throw new Exception("Элемент не найден");
         }
 
+        public bool IsEnough(OrderBindingModel order)
+        {
+            return false;
+        }
+
         private static Warehouse CreateModel(WarehouseBindingModel model, Warehouse warehouse)
         {
             warehouse.Name = model.Name;

@@ -59,6 +59,42 @@ namespace ConfectionaryFileImplement.Implements
             else throw new Exception("Элемент не найден");
         }
 
+        public bool IsEnough(OrderBindingModel order)
+        {
+            Dictionary<int, int> components = source.Pastries.FirstOrDefault(rec => rec.Id == order.PastryId).PastryComponents;
+            
+            foreach(var component in components)
+            {
+                int count = 0;
+                int required = component.Value * order.Count;
+                foreach(var warehouse in source.Warehouses)
+                {
+                    if (warehouse.StoredComponents.TryGetValue(component.Key, out int stored)) count += stored;
+                }
+                if (count < required) return false;
+            }
+
+            foreach (var component in components)
+            {
+                int required = component.Value * order.Count;
+                foreach (var warehouse in source.Warehouses)
+                {
+                    if (warehouse.StoredComponents.Remove(component.Key, out int stored))
+                    {
+                        if (required > stored) required -= stored;
+                        else
+                        {
+                            stored -= required;
+                            warehouse.StoredComponents.Add(component.Key, stored);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
         private static Warehouse CreateModel(WarehouseBindingModel model, Warehouse warehouse)
         {
             warehouse.Name = model.Name;
