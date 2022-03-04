@@ -72,7 +72,7 @@ namespace ConfectionaryFileImplement
                 
                 foreach (var elem in xElements)
                 {
-                    if (!Enum.TryParse(elem.Attribute("Status").Value, out OrderStatus orderStatus))
+                    if (!Enum.TryParse(elem.Element("Status").Value, out OrderStatus orderStatus))
                     {
                         orderStatus = OrderStatus.Принят;
                     }
@@ -80,12 +80,12 @@ namespace ConfectionaryFileImplement
                     list.Add(new Order
                     {
                         Id = Convert.ToInt32(elem.Attribute("Id").Value),
-                        PastryId = Convert.ToInt32(elem.Attribute("PastryId").Value),
-                        Count = Convert.ToInt32(elem.Attribute("Count").Value),
-                        Sum = Convert.ToDecimal(elem.Attribute("Sum").Value),
+                        PastryId = Convert.ToInt32(elem.Element("PastryId").Value),
+                        Count = Convert.ToInt32(elem.Element("Count").Value),
+                        Sum = Convert.ToDecimal(elem.Element("Sum").Value),
                         Status = orderStatus,
-                        DateCreate = Convert.ToDateTime(elem.Attribute("DateCreate").Value),
-                        DateImplement = Convert.ToDateTime(elem.Attribute("DateImplement").Value)
+                        DateCreate = Convert.ToDateTime(elem.Element("DateCreate").Value),
+                        DateImplement = Convert.ToDateTime(elem.Element("DateImplement").Value)
                     });
                 }
             }
