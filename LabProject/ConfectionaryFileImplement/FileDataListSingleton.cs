@@ -76,7 +76,7 @@ namespace ConfectionaryFileImplement
                 
                 foreach (var elem in xElements)
                 {
-                    if (!Enum.TryParse(elem.Attribute("Status").Value, out OrderStatus orderStatus))
+                    if (!Enum.TryParse(elem.Element("Status").Value, out OrderStatus orderStatus))
                     {
                         orderStatus = OrderStatus.Принят;
                     }
@@ -236,7 +236,7 @@ namespace ConfectionaryFileImplement
                     {
                         storedComponents.Add(new XElement("StoredComponent",
                             new XElement("Key", component.Key),
-                            new XElement("Key", component.Value)));
+                            new XElement("Value", component.Value)));
                     }
                     xElement.Add(new XElement("Warehouse",
                         new XAttribute("Id", warehouse.Id),
