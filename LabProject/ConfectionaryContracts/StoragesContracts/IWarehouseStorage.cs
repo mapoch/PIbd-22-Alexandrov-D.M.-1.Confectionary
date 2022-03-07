@@ -14,5 +14,6 @@ namespace ConfectionaryContracts.StoragesContracts
         public void Insert(WarehouseBindingModel model);
         public void Update(WarehouseBindingModel model);
         public void Delete(WarehouseBindingModel model);
+        public bool IsEnough(OrderBindingModel order);
     }
 }
