@@ -72,15 +72,7 @@ namespace ConfectionaryFileImplement.Implements
 
         private OrderViewModel CreateModel(Order order)
         {
-            string pastryName = null;
-            foreach (Pastry pastry in source.Pastries)
-            {
-                if (pastry.Id == order.PastryId) 
-                { 
-                    pastryName = pastry.PastryName;
-                    break;
-                }
-            }
+            string pastryName = source.Pastries.FirstOrDefault(rec => rec.Id == order.PastryId).PastryName;
 
             return new OrderViewModel
             {
