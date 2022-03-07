@@ -50,8 +50,12 @@ namespace ConfectionaryDatabaseImplement.Implements
             using var transaction = context.Database.BeginTransaction();
             try
             {
-                context.Pastries.Add(CreateModel(model, new Pastry(), context));
+                Pastry pastry = new Pastry();  
+                CreateModel(model, pastry, context);
+                context.Pastries.Add(pastry);
                 context.SaveChanges();
+                MakeDependences(model, pastry, context);
+
                 transaction.Commit();
             }
             catch
@@ -74,6 +78,7 @@ namespace ConfectionaryDatabaseImplement.Implements
                 }
                 CreateModel(model, element, context);
                 context.SaveChanges();
+                MakeDependences(model, element, context);
                 transaction.Commit();
             }
             catch
@@ -103,6 +108,11 @@ namespace ConfectionaryDatabaseImplement.Implements
             pastry.PastryName = model.PastryName;
             pastry.Price = model.Price;
 
+            return pastry;
+        }
+
+        private static void MakeDependences(PastryBindingModel model, Pastry pastry, ConfectionaryDatabase context)
+        {
             if (model.Id.HasValue)
             {
                 var pastryComponents = context.PastryComponents.
@@ -110,14 +120,14 @@ namespace ConfectionaryDatabaseImplement.Implements
                 context.PastryComponents.RemoveRange(pastryComponents.
                     Where(rec => !model.PastryComponents.ContainsKey(rec.ComponentId)).ToList());
                 context.SaveChanges();
-                foreach(var updateComponent in pastryComponents)
+                foreach (var updateComponent in pastryComponents)
                 {
                     updateComponent.Count = model.PastryComponents[updateComponent.ComponentId].Item2;
                     model.PastryComponents.Remove(updateComponent.ComponentId);
                 }
                 context.SaveChanges();
             }
-            foreach(var pc in model.PastryComponents)
+            foreach (var pc in model.PastryComponents)
             {
                 context.PastryComponents.Add(new PastryComponent
                 {
@@ -127,7 +137,6 @@ namespace ConfectionaryDatabaseImplement.Implements
                 });
                 context.SaveChanges();
             }
-            return pastry;
         }
 
         private static PastryViewModel CreateModel(Pastry pastry)

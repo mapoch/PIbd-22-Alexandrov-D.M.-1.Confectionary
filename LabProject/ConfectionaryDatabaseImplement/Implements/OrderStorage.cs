@@ -87,10 +87,14 @@ namespace ConfectionaryDatabaseImplement.Implements
 
         private static OrderViewModel CreateModel(Order order)
         {
+            using var context = new ConfectionaryDatabase();
+            string pastryName = context.Pastries.FirstOrDefault(rec => rec.Id == order.PastryId).PastryName;
+
             return new OrderViewModel
             {
                 Id = order.Id,
                 PastryId = order.PastryId,
+                PastryName = pastryName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status.ToString(),

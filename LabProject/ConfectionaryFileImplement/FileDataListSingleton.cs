@@ -76,6 +76,15 @@ namespace ConfectionaryFileImplement
                     {
                         orderStatus = OrderStatus.Принят;
                     }
+                    DateTime? orderDateImplement; 
+                    if (elem.Element("DateImplement").Value == null || elem.Element("DateImplement").Value == "") 
+                    { 
+                        orderDateImplement = null; 
+                    } 
+                    else 
+                    { 
+                        orderDateImplement = Convert.ToDateTime(elem.Element("DateImplement").Value); 
+                    }
 
                     list.Add(new Order
                     {
@@ -85,7 +94,7 @@ namespace ConfectionaryFileImplement
                         Sum = Convert.ToDecimal(elem.Element("Sum").Value),
                         Status = orderStatus,
                         DateCreate = Convert.ToDateTime(elem.Element("DateCreate").Value),
-                        DateImplement = Convert.ToDateTime(elem.Element("DateImplement").Value)
+                        DateImplement = orderDateImplement
                     });
                 }
             }
