@@ -61,16 +61,10 @@ namespace ConfectionaryFileImplement.Implements
 
         public bool IsEnough(OrderBindingModel order)
         {
-            foreach (var component in source.Pastries.FirstOrDefault(rec => rec.Id == order.PastryId).PastryComponents)
-            {
-                int count = 0;
-                int required = component.Value * order.Count;
-                foreach (var warehouse in source.Warehouses)
-                {
-                    if (warehouse.StoredComponents.TryGetValue(component.Key, out int stored)) count += stored;
-                }
-                if (count < required) return false;
-            }
+            if (source.Pastries.FirstOrDefault(rec => rec.Id == order.PastryId).PastryComponents.Any(past =>
+             (source.Warehouses.Where(war => war.StoredComponents.ContainsKey(past.Key)).
+                    Sum(war => { war.StoredComponents.TryGetValue(past.Key, out int k); return k; }) < (past.Value * order.Count))
+            )) return false; 
 
             foreach (var component in source.Pastries.FirstOrDefault(rec => rec.Id == order.PastryId).PastryComponents)
             {
