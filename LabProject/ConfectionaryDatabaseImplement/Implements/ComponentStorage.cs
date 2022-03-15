@@ -66,12 +66,15 @@ namespace ConfectionaryDatabaseImplement.Implements
         {
             using var context = new ConfectionaryDatabase();
             var element = context.Components.FirstOrDefault(rec => rec.Id == model.Id);
-            if (element == null)
+            if (element != null)
+            {
+                context.Components.Remove(element);
+                context.SaveChanges();
+            }
+            else
             {
                 throw new Exception("Элемент не найден");
             }
-            CreateModel(model, element);
-            context.SaveChanges();
         }
 
         private static Component CreateModel(ComponentBindingModel model, Component component)

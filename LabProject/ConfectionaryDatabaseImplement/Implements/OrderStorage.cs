@@ -7,6 +7,7 @@ using ConfectionaryContracts.BindingModels;
 using ConfectionaryContracts.StoragesContracts;
 using ConfectionaryContracts.ViewModels;
 using ConfectionaryDatabaseImplement.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ConfectionaryDatabaseImplement.Implements
 {
@@ -15,7 +16,7 @@ namespace ConfectionaryDatabaseImplement.Implements
         public List<OrderViewModel> GetFullList()
         {
             using var context = new ConfectionaryDatabase();
-            return context.Orders.Select(CreateModel).ToList();
+            return context.Orders.Include(rec => rec.Pastry).Select(CreateModel).ToList();
         }
 
         public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
@@ -26,8 +27,8 @@ namespace ConfectionaryDatabaseImplement.Implements
             }
 
             using var context = new ConfectionaryDatabase();
-            return context.Orders.Where(rec => rec.PastryId == model.PastryId)
-                .Select(CreateModel).ToList();
+            return context.Orders.Include(rec => rec.Pastry).
+                Where(rec => rec.PastryId == model.PastryId).Select(CreateModel).ToList();
         }
 
         public OrderViewModel GetElement(OrderBindingModel model)
@@ -38,7 +39,7 @@ namespace ConfectionaryDatabaseImplement.Implements
             }
 
             using var context = new ConfectionaryDatabase();
-            var order = context.Orders.
+            var order = context.Orders.Include(rec => rec.Pastry).
                 FirstOrDefault(rec => rec.PastryId == model.PastryId || rec.Id == model.Id);
             return order != null ? CreateModel(order) : null;
         }
@@ -46,7 +47,9 @@ namespace ConfectionaryDatabaseImplement.Implements
         public void Insert(OrderBindingModel model)
         {
             using var context = new ConfectionaryDatabase();
-            context.Orders.Add(CreateModel(model, new Order()));
+            Order order = new Order();
+            CreateModel(model, order, context);
+            context.Orders.Add(order);
             context.SaveChanges();
         }
 
@@ -58,7 +61,7 @@ namespace ConfectionaryDatabaseImplement.Implements
             {
                 throw new Exception("Элемент не найден");
             }
-            CreateModel(model, element);
+            CreateModel(model, element, context);
             context.SaveChanges();
         }
 
@@ -66,17 +69,21 @@ namespace ConfectionaryDatabaseImplement.Implements
         {
             using var context = new ConfectionaryDatabase();
             var element = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
-            if (element == null)
+            if (element != null)
+            {
+                context.Remove(element);
+                context.SaveChanges();
+            }
+            else
             {
                 throw new Exception("Элемент не найден");
             }
-            CreateModel(model, element);
-            context.SaveChanges();
         }
 
-        private static Order CreateModel(OrderBindingModel model, Order order)
+        private static Order CreateModel(OrderBindingModel model, Order order, ConfectionaryDatabase context)
         {
             order.PastryId = model.PastryId;
+            order.Pastry = context.Pastries.FirstOrDefault(rec => rec.Id == model.PastryId);
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
@@ -87,14 +94,11 @@ namespace ConfectionaryDatabaseImplement.Implements
 
         private static OrderViewModel CreateModel(Order order)
         {
-            using var context = new ConfectionaryDatabase();
-            string pastryName = context.Pastries.FirstOrDefault(rec => rec.Id == order.PastryId).PastryName;
-
             return new OrderViewModel
             {
                 Id = order.Id,
                 PastryId = order.PastryId,
-                PastryName = pastryName,
+                PastryName = order.Pastry.PastryName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status.ToString(),
