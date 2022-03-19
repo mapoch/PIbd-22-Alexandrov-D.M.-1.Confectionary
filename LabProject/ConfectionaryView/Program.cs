@@ -28,8 +28,6 @@ namespace ConfectionaryView
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(Container.Resolve<FormMain>());
-
-            FileDataListSingleton.GetInstance().SaveData();
         }
 
         private static IUnityContainer BuildUnityContainer()
@@ -39,6 +37,7 @@ namespace ConfectionaryView
             currentContainer.RegisterType<IComponentStorage, ComponentStorage>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IOrderStorage, OrderStorage>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IPastryStorage, PastryStorage>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IWarehouseStorage, WarehouseStorage>(new HierarchicalLifetimeManager());
 
             currentContainer.RegisterType<IComponentLogic, ComponentLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IOrderLogic, OrderLogic>(new HierarchicalLifetimeManager());

@@ -8,17 +8,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ConfectionaryDatabaseImplement.Models
 {
-    public class Component
+    public class Warehouse
     {
         public int Id { get; set; }
-        
-        [Required]
-        public string ComponentName { get; set; }
-        
-        [ForeignKey("ComponentId")]
-        public virtual List<PastryComponent> PastryComponents { get; set; }
 
-        [ForeignKey("ComponentId")]
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string Manager { get; set; }
+
+        [Required]
+        public DateTime DateCreate { get; set; }
+
+        [ForeignKey("WarehouseId")]
         public virtual List<WarehouseComponent> WarehouseComponents { get; set; }
     }
 }

@@ -66,7 +66,7 @@ namespace ConfectionaryView
                 {
                     WarehouseId = Convert.ToInt32(comboBoxWarehouse.SelectedValue),
                     ComponentId = Convert.ToInt32(comboBoxComponent.SelectedValue),
-                    ComponentName = comboBoxComponent.DisplayMember,
+                    ComponentName = comboBoxComponent.Text,
                     Count = Convert.ToInt32(textBoxCount.Text),
                 });
                 MessageBox.Show("Пополнение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
