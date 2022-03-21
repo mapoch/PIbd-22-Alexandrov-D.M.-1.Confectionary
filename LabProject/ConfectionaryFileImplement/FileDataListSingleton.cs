@@ -76,6 +76,15 @@ namespace ConfectionaryFileImplement
                     {
                         orderStatus = OrderStatus.Принят;
                     }
+                    DateTime? orderDateImplement; 
+                    if (elem.Element("DateImplement").Value == null || elem.Element("DateImplement").Value == "") 
+                    { 
+                        orderDateImplement = null; 
+                    } 
+                    else 
+                    { 
+                        orderDateImplement = Convert.ToDateTime(elem.Element("DateImplement").Value); 
+                    }
 
                     DateTime? orderDateImplement;
                     if (elem.Element("DateImplement").Value == null || elem.Element("DateImplement").Value == "")

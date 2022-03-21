@@ -2,17 +2,22 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>ConfectionaryView.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.14">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Unity" Version="5.11.10" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ConfectionaryBusinessLogic\ConfectionaryBusinessLogic.csproj" />
+    <ProjectReference Include="..\ConfectionaryDatabaseImplement\ConfectionaryDatabaseImplement.csproj" />
     <ProjectReference Include="..\ConfectionaryFileImplement\ConfectionaryFileImplement.csproj" />
     <ProjectReference Include="..\ConfectionaryListImplement\ConfectionaryListImplement.csproj" />
   </ItemGroup>

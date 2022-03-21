@@ -8,8 +8,8 @@ using Unity.Lifetime;
 using ConfectionaryBusinessLogic.BusinessLogics;
 using ConfectionaryContracts.BusinessLogicContracts;
 using ConfectionaryContracts.StoragesContracts;
-using ConfectionaryFileImplement;
-using ConfectionaryFileImplement.Implements;
+using ConfectionaryDatabaseImplement;
+using ConfectionaryDatabaseImplement.Implements;
 
 namespace ConfectionaryView
 {
@@ -28,8 +28,6 @@ namespace ConfectionaryView
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(Container.Resolve<FormMain>());
-
-            FileDataListSingleton.GetInstance().SaveData();
         }
 
         private static IUnityContainer BuildUnityContainer()
