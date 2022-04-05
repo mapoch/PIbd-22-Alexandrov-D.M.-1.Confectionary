@@ -51,7 +51,7 @@ namespace ConfectionaryDatabaseImplement.Implements
             try
             {
                 Pastry pastry = new Pastry();  
-                CreateModel(model, pastry, context);
+                CreateModel(model, pastry);
                 context.Pastries.Add(pastry);
                 context.SaveChanges();
                 MakeDependences(model, pastry, context);
@@ -76,7 +76,7 @@ namespace ConfectionaryDatabaseImplement.Implements
                 {
                     throw new Exception("Элемент не найден");
                 }
-                CreateModel(model, element, context);
+                CreateModel(model, element);
                 context.SaveChanges();
                 MakeDependences(model, element, context);
                 transaction.Commit();
@@ -103,7 +103,7 @@ namespace ConfectionaryDatabaseImplement.Implements
             }
         }
 
-        private static Pastry CreateModel(PastryBindingModel model, Pastry pastry, ConfectionaryDatabase context) 
+        private static Pastry CreateModel(PastryBindingModel model, Pastry pastry) 
         {
             pastry.PastryName = model.PastryName;
             pastry.Price = model.Price;
