@@ -41,7 +41,10 @@ namespace ConfectionaryListImplement.Implements
             {
                 foreach (var order in source.Orders)
                 {
-                    if (order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo) 
+                    if (model.DateFrom.HasValue && model.DateTo.HasValue &&
+                        order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo)
+                        result.Add(CreateModel(order));
+                    else if (model.ClientId.HasValue && order.ClientId == model.ClientId)
                         result.Add(CreateModel(order));
                 }
             }
@@ -106,6 +109,7 @@ namespace ConfectionaryListImplement.Implements
             order.Status = model.Status;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
+            order.ClientId = model.ClientId;
             return order;
         }
 
@@ -120,6 +124,15 @@ namespace ConfectionaryListImplement.Implements
                     break;
                 }
             }
+            string clientFIO = null;
+            foreach (Client client in source.Clients)
+            {
+                if (client.Id == order.ClientId)
+                {
+                    clientFIO = client.FIO;
+                    break;
+                }
+            }
             return new OrderViewModel { Id = order.Id,
                 PastryId = order.PastryId,
                 PastryName = pastryName,
@@ -127,7 +140,9 @@ namespace ConfectionaryListImplement.Implements
                 Sum = order.Sum, 
                 Status = order.Status.ToString(), 
                 DateCreate = order.DateCreate, 
-                DateImplement = order.DateImplement
+                DateImplement = order.DateImplement,
+                ClientId = order.ClientId,
+                ClientFIO = clientFIO
             };
         }
     }

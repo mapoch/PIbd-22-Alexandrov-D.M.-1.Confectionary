@@ -13,6 +13,7 @@ namespace ConfectionaryDatabaseImplement.Models
     {
         public int Id { get; set; }
         public int PastryId { get; set; }
+        public int? ClientId { get; set; }
 
         [Required]
         public int Count { get; set; }
@@ -28,5 +29,7 @@ namespace ConfectionaryDatabaseImplement.Models
         public DateTime? DateImplement { get; set; }
 
         public virtual Pastry Pastry { get; set; }
+
+        public virtual Client Client { get; set; }
     }
 }

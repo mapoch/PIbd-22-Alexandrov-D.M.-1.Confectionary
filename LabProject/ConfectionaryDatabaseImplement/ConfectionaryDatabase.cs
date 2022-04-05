@@ -23,5 +23,6 @@ namespace ConfectionaryDatabaseImplement
         public virtual DbSet<Pastry> Pastries { get; set; }
         public virtual DbSet<PastryComponent> PastryComponents { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Client> Clients { get; set; }
     }
 }

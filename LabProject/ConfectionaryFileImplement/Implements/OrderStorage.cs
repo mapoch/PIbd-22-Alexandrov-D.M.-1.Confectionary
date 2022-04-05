@@ -27,16 +27,12 @@ namespace ConfectionaryFileImplement.Implements
         {
             if (model == null) return null;
 
-            if (model.DateFrom == null && model.DateTo == null)
-            {
-                return source.Orders.Where(rec => rec.Id.Equals(model.Id))
-                    .Select(CreateModel).ToList();
-            }
-            else
-            {
-                return source.Orders.Where(rec => 
-                rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo).Select(CreateModel).ToList();
-            }
+            return source.Orders.Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue
+                && rec.DateCreate.Date == model.DateCreate.Date) ||
+                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date
+                && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
+                (model.ClientId.HasValue && rec.ClientId == model.ClientId))
+                .Select(CreateModel).ToList();
         }
 
         public OrderViewModel GetElement(OrderBindingModel model)
@@ -76,12 +72,14 @@ namespace ConfectionaryFileImplement.Implements
             order.Status = model.Status;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
+            order.ClientId = model.ClientId;
             return order;
         }
 
         private OrderViewModel CreateModel(Order order)
         {
             string pastryName = source.Pastries.FirstOrDefault(rec => rec.Id == order.PastryId).PastryName;
+            string clientFIO = source.Clients.FirstOrDefault(rec => rec.Id == order.ClientId).FIO;
 
             return new OrderViewModel
             {
@@ -92,7 +90,9 @@ namespace ConfectionaryFileImplement.Implements
                 Sum = order.Sum,
                 Status = order.Status.ToString(),
                 DateCreate = order.DateCreate,
-                DateImplement = order.DateImplement
+                DateImplement = order.DateImplement,
+                ClientId = order.ClientId,
+                ClientFIO = clientFIO
             };
         }
     }
