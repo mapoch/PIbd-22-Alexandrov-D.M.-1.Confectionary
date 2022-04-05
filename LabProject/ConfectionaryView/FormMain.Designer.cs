@@ -1,5 +1,4 @@
-﻿
-namespace ConfectionaryView
+﻿namespace ConfectionaryView
 {
     partial class FormMain
     {
@@ -145,7 +144,7 @@ namespace ConfectionaryView
             this.menuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemLists,
-            this.пополнитьСкладToolStripMenuItem});
+            this.пополнитьСкладToolStripMenuItem,
             this.toolStripMenuItemLists,
             this.отчётыToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
