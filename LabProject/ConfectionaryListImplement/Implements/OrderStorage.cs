@@ -30,9 +30,21 @@ namespace ConfectionaryListImplement.Implements
             if (model == null) return null;
 
             var result = new List<OrderViewModel>();
-            foreach (var order in source.Orders)
+            if (model.DateFrom == null && model.DateTo == null)
             {
-                if (order.PastryId == model.PastryId) result.Add(CreateModel(order));
+                foreach (var order in source.Orders)
+                {
+                    if (order.PastryId == model.PastryId) result.Add(CreateModel(order));
+                }
+            }
+            else
+            {
+                foreach (var order in source.Orders)
+                {
+                    if (order.PastryId == model.PastryId 
+                        && order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo) 
+                        result.Add(CreateModel(order));
+                }
             }
             return result;
         }

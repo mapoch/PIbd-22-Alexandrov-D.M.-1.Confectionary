@@ -35,18 +35,18 @@ namespace ConfectionaryBusinessLogic.OfficePackage
                 {
                     ColumnName = "A",
                     RowIndex = rowIndex,
-                    Text = pc.ComponentName,
+                    Text = pc.PastryName,
                     StyleInfo = ExcelStyleInfoType.Text
                 });
                 rowIndex++;
 
-                foreach (var pastry in pc.Pastries)
+                foreach (var component in pc.Components)
                 {
                     InsertCellInWorksheet(new ExcelCellParameters
                     {
                         ColumnName = "B",
                         RowIndex = rowIndex,
-                        Text = pastry.Item1,
+                        Text = component.Item1,
                         StyleInfo = ExcelStyleInfoType.TextWithBorder
                     });
 
@@ -54,7 +54,7 @@ namespace ConfectionaryBusinessLogic.OfficePackage
                     {
                         ColumnName = "C",
                         RowIndex = rowIndex,
-                        Text = pastry.Item2.ToString(),
+                        Text = component.Item2.ToString(),
                         StyleInfo = ExcelStyleInfoType.TextWithBorder
                     });
 
@@ -63,11 +63,21 @@ namespace ConfectionaryBusinessLogic.OfficePackage
 
                 InsertCellInWorksheet(new ExcelCellParameters
                 {
+                    ColumnName = "B",
+                    RowIndex = rowIndex,
+                    Text = "Итого:",
+                    StyleInfo = ExcelStyleInfoType.Text
+                });
+
+                InsertCellInWorksheet(new ExcelCellParameters
+                {
                     ColumnName = "C",
                     RowIndex = rowIndex,
                     Text = pc.TotalCount.ToString(),
                     StyleInfo = ExcelStyleInfoType.Text
                 });
+
+                rowIndex++;
             }
 
             SaveExcel(info);

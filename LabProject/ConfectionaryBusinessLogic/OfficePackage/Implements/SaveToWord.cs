@@ -86,7 +86,7 @@ namespace ConfectionaryBusinessLogic.OfficePackage.Implements
 
                     docRun.AppendChild(new Text 
                         { Text = run.Item1, Space = SpaceProcessingModeValues.Preserve });
-                    docParagraph.AppendChild(docParagraph);
+                    docParagraph.AppendChild(docRun);
                 }
                 docBody.AppendChild(docParagraph);
             }

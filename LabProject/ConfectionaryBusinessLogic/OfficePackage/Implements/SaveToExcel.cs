@@ -72,17 +72,17 @@ namespace ConfectionaryBusinessLogic.OfficePackage.Implements
             leftBorder.Append(new DocumentFormat.OpenXml.Office2010.Excel.Color()
                 { Indexed = 64U });
 
-            var rightBorder = new LeftBorder() { Style = BorderStyleValues.Thin };
+            var rightBorder = new RightBorder() { Style = BorderStyleValues.Thin };
             rightBorder.Append(new DocumentFormat.OpenXml.Office2010.Excel.Color()
-            { Indexed = 64U });
+                { Indexed = 64U });
 
-            var topBorder = new LeftBorder() { Style = BorderStyleValues.Thin };
+            var topBorder = new TopBorder() { Style = BorderStyleValues.Thin };
             topBorder.Append(new DocumentFormat.OpenXml.Office2010.Excel.Color()
-            { Indexed = 64U });
+                { Indexed = 64U });
 
-            var bottomBorder = new LeftBorder() { Style = BorderStyleValues.Thin };
+            var bottomBorder = new BottomBorder() { Style = BorderStyleValues.Thin };
             bottomBorder.Append(new DocumentFormat.OpenXml.Office2010.Excel.Color()
-            { Indexed = 64U });
+                { Indexed = 64U });
 
             borderThin.Append(leftBorder);
             borderThin.Append(rightBorder);
@@ -123,8 +123,7 @@ namespace ConfectionaryBusinessLogic.OfficePackage.Implements
             var stylesheetExtensionList = new StylesheetExtensionList();
 
             var stylesheetExtension1 = new StylesheetExtension() { Uri = "{EB79DEF2-80B8-43e5-95BD-54CBDDF9020C}" };
-            stylesheetExtension1.AddNamespaceDeclaration("x14", 
-                "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main");
+            stylesheetExtension1.AddNamespaceDeclaration("x14", "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main");
             stylesheetExtension1.Append(new SlicerStyles() { DefaultSlicerStyle = "SlicerStyleLight1" });
 
             var stylesheetExtension2 = new StylesheetExtension() { Uri = "{9260A510-F301-46a8 - 8635 - F512D64BE5F5}" };
@@ -158,8 +157,7 @@ namespace ConfectionaryBusinessLogic.OfficePackage.Implements
 
         protected override void CreateExcel(ExcelInfo info)
         {
-            spreadsheetDocument = SpreadsheetDocument.Create(info.FileName,
-SpreadsheetDocumentType.Workbook);
+            spreadsheetDocument = SpreadsheetDocument.Create(info.FileName, SpreadsheetDocumentType.Workbook);
 
             var workbookpart = spreadsheetDocument.AddWorkbookPart();
             workbookpart.Workbook = new Workbook();

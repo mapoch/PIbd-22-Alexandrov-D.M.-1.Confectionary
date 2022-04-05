@@ -8,8 +8,8 @@ namespace ConfectionaryContracts.ViewModels
 {
     public class ReportPastryComponentViewModel
     {
-        public string ComponentName { get; set; }
+        public string PastryName { get; set; }
         public int TotalCount { get; set; }
-        public List<Tuple<string, int>> Pastries { get; set; }
+        public List<Tuple<string, int>> Components { get; set; }
     }
 }

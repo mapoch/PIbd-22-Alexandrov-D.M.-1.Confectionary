@@ -92,7 +92,7 @@ namespace ConfectionaryView
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.buttonSave);
             this.Name = "FormReportPastryComponents";
-            this.Text = "FormReportPastryComponents";
+            this.Text = "Компоненты по изделиям";
             this.Load += new System.EventHandler(this.FormReportPastryComponents_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);

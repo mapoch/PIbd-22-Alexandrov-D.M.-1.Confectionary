@@ -16,20 +16,23 @@ namespace ConfectionaryBusinessLogic.OfficePackage
 
             CreateParagraph(new WordParagraph
             {
-                Texts = new List<(string, WordTextProperties)> { (info.Title,
-                    new WordTextProperties { Bold = true, Size = "24",})},
-                TextProperties = new WordTextProperties 
-                    { Size = "24", JustificationType = WordJustificationType.Center}
+                Texts = new List<(string, WordTextProperties)>()
+                {
+                    (info.Title, new WordTextProperties {Bold = true, Size = "24",})
+                },
+                TextProperties = new WordTextProperties
+                { Size = "24", JustificationType = WordJustificationType.Center }
             });
 
-            foreach (var component in info.Components)
+            foreach (var pastry in info.Pastries)
             {
                 CreateParagraph(new WordParagraph
                 {
-                    Texts = new List<(string, WordTextProperties)> 
-                        { (component.ComponentName, new WordTextProperties { Size = "24", })},
-                    TextProperties = new WordTextProperties 
-                        { Size = "24", JustificationType = WordJustificationType.Both}
+                    Texts = new List<(string, WordTextProperties)>
+                        { (pastry.PastryName, new WordTextProperties {  Bold = true, Size = "24", }),
+                            (": цена - " + pastry.Price + "руб.", new WordTextProperties { Size = "24"})},
+                    TextProperties = new WordTextProperties
+                    { Size = "24", JustificationType = WordJustificationType.Both }
                 });
             }
 

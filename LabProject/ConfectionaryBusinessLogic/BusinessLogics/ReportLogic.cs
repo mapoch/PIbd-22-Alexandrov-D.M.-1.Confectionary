@@ -15,16 +15,16 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
     public class ReportLogic : IReportLogic
     {
         private readonly IComponentStorage componentStorage;
-        private readonly IPastryStorage productStorage;
+        private readonly IPastryStorage pastryStorage;
         private readonly IOrderStorage orderStorage;
         private readonly AbstractSaveToExcel saveToExcel;
         private readonly AbstractSaveToWord saveToWord;
         private readonly AbstractSaveToPdf saveToPdf;
-        public ReportLogic(IPastryStorage _productStorage, IComponentStorage _componentStorage, 
+        public ReportLogic(IPastryStorage _pastryStorage, IComponentStorage _componentStorage, 
             IOrderStorage _orderStorage, AbstractSaveToExcel _saveToExcel, 
             AbstractSaveToWord _saveToWord, AbstractSaveToPdf _saveToPdf)
         {
-            productStorage = _productStorage;
+            pastryStorage = _pastryStorage;
             componentStorage = _componentStorage;
             orderStorage = _orderStorage;
             saveToExcel = _saveToExcel;
@@ -35,23 +35,23 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
         public List<ReportPastryComponentViewModel> GetPastryComponent()
         {
             var components = componentStorage.GetFullList();
-            var products = productStorage.GetFullList();
+            var pastries = pastryStorage.GetFullList();
             var list = new List<ReportPastryComponentViewModel>();
-            foreach (var component in components)
+            foreach (var pastry in pastries)
             {
                 var record = new ReportPastryComponentViewModel
                 {
-                    ComponentName = component.ComponentName,
-                    Pastries = new List<Tuple<string, int>>(),
+                    PastryName = pastry.PastryName,
+                    Components = new List<Tuple<string, int>>(),
                     TotalCount = 0
                 };
-                foreach (var product in products)
+                foreach (var component in components)
                 {
-                    if (product.PastryComponents.ContainsKey(component.Id))
+                    if (pastry.PastryComponents.ContainsKey(component.Id))
                     {
-                        record.Pastries.Add(new Tuple<string, int>(product.PastryName, 
-                            product.PastryComponents[component.Id].Item2));
-                        record.TotalCount += product.PastryComponents[component.Id].Item2;
+                        record.Components.Add(new Tuple<string, int>(component.ComponentName, 
+                            pastry.PastryComponents[component.Id].Item2));
+                        record.TotalCount += pastry.PastryComponents[component.Id].Item2;
                     }
                 }
                 list.Add(record);
@@ -72,8 +72,8 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
             saveToWord.CreateDoc(new WordInfo
             {
                 FileName = model.FileName,
-                Title = "Список компонент",
-                Components = componentStorage.GetFullList()
+                Title = "Список изделий",
+                Pastries = pastryStorage.GetFullList()
             });
         }
 
@@ -82,7 +82,7 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
             saveToExcel.CreateReport(new ExcelInfo
             {
                 FileName = model.FileName,
-                Title = "Список компонент",
+                Title = "Список изделий",
                 PastryComponents = GetPastryComponent()
             });
         }
