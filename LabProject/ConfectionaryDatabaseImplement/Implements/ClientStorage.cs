@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ConfectionaryDatabaseImplement;
 using ConfectionaryContracts.BindingModels;
 using ConfectionaryContracts.StoragesContracts;
 using ConfectionaryContracts.ViewModels;
 using ConfectionaryDatabaseImplement.Models;
 
-namespace ConfectionaryListImplement.Implements
+namespace ConfectionaryDatabaseImplement.Implements
 {
     public class ClientStorage : IClientStorage
     {

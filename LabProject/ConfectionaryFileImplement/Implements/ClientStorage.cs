@@ -9,7 +9,7 @@ using ConfectionaryContracts.StoragesContracts;
 using ConfectionaryContracts.ViewModels;
 using ConfectionaryFileImplement.Models;
 
-namespace ConfectionaryListImplement.Implements
+namespace ConfectionaryFileImplement.Implements
 {
     public class ClientStorage : IClientStorage
     {
