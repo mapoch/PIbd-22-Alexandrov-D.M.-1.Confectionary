@@ -6,6 +6,8 @@ using System.Windows.Forms;
 using Unity;
 using Unity.Lifetime;
 using ConfectionaryBusinessLogic.BusinessLogics;
+using ConfectionaryBusinessLogic.OfficePackage;
+using ConfectionaryBusinessLogic.OfficePackage.Implements;
 using ConfectionaryContracts.BusinessLogicContracts;
 using ConfectionaryContracts.StoragesContracts;
 using ConfectionaryDatabaseImplement;
@@ -41,6 +43,10 @@ namespace ConfectionaryView
             currentContainer.RegisterType<IComponentLogic, ComponentLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IOrderLogic, OrderLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IPastryLogic, PastryLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IReportLogic, ReportLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<AbstractSaveToExcel, SaveToExcel>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<AbstractSaveToWord, SaveToWord>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<AbstractSaveToPdf, SaveToPdf>(new HierarchicalLifetimeManager());
 
             return currentContainer;
         }

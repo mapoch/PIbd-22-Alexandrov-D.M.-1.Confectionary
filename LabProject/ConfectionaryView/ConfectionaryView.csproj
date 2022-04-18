@@ -12,14 +12,18 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="ReportViewerCore.WinForms" Version="15.1.16" />
     <PackageReference Include="Unity" Version="5.11.10" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ConfectionaryBusinessLogic\ConfectionaryBusinessLogic.csproj" />
+    <ProjectReference Include="..\ConfectionaryContracts\ConfectionaryContracts.csproj" />
     <ProjectReference Include="..\ConfectionaryDatabaseImplement\ConfectionaryDatabaseImplement.csproj" />
-    <ProjectReference Include="..\ConfectionaryFileImplement\ConfectionaryFileImplement.csproj" />
-    <ProjectReference Include="..\ConfectionaryListImplement\ConfectionaryListImplement.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DataSources\" />
   </ItemGroup>
 
 </Project>
