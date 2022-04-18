@@ -37,6 +37,8 @@ namespace ConfectionaryView
             this.textBoxSum = new System.Windows.Forms.TextBox();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.comboBoxClients = new System.Windows.Forms.ComboBox();
+            this.labelClient = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelProduct
@@ -77,7 +79,7 @@ namespace ConfectionaryView
             // labelSum
             // 
             this.labelSum.AutoSize = true;
-            this.labelSum.Location = new System.Drawing.Point(42, 80);
+            this.labelSum.Location = new System.Drawing.Point(42, 111);
             this.labelSum.Name = "labelSum";
             this.labelSum.Size = new System.Drawing.Size(58, 20);
             this.labelSum.TabIndex = 4;
@@ -86,7 +88,7 @@ namespace ConfectionaryView
             // textBoxSum
             // 
             this.textBoxSum.BackColor = System.Drawing.SystemColors.MenuBar;
-            this.textBoxSum.Location = new System.Drawing.Point(106, 77);
+            this.textBoxSum.Location = new System.Drawing.Point(106, 108);
             this.textBoxSum.Name = "textBoxSum";
             this.textBoxSum.ReadOnly = true;
             this.textBoxSum.Size = new System.Drawing.Size(221, 27);
@@ -95,7 +97,7 @@ namespace ConfectionaryView
             // buttonCancel
             // 
             this.buttonCancel.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonCancel.Location = new System.Drawing.Point(228, 110);
+            this.buttonCancel.Location = new System.Drawing.Point(228, 141);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(99, 39);
             this.buttonCancel.TabIndex = 6;
@@ -106,7 +108,7 @@ namespace ConfectionaryView
             // buttonSave
             // 
             this.buttonSave.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonSave.Location = new System.Drawing.Point(123, 110);
+            this.buttonSave.Location = new System.Drawing.Point(123, 141);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(99, 39);
             this.buttonSave.TabIndex = 7;
@@ -114,11 +116,30 @@ namespace ConfectionaryView
             this.buttonSave.UseVisualStyleBackColor = false;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
+            // comboBoxClients
+            // 
+            this.comboBoxClients.FormattingEnabled = true;
+            this.comboBoxClients.Location = new System.Drawing.Point(106, 73);
+            this.comboBoxClients.Name = "comboBoxClients";
+            this.comboBoxClients.Size = new System.Drawing.Size(221, 28);
+            this.comboBoxClients.TabIndex = 9;
+            // 
+            // labelClient
+            // 
+            this.labelClient.AutoSize = true;
+            this.labelClient.Location = new System.Drawing.Point(39, 76);
+            this.labelClient.Name = "labelClient";
+            this.labelClient.Size = new System.Drawing.Size(61, 20);
+            this.labelClient.TabIndex = 8;
+            this.labelClient.Text = "Клиент:";
+            // 
             // FormCreateOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(337, 156);
+            this.ClientSize = new System.Drawing.Size(337, 190);
+            this.Controls.Add(this.comboBoxClients);
+            this.Controls.Add(this.labelClient);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.textBoxSum);
@@ -145,5 +166,7 @@ namespace ConfectionaryView
         private System.Windows.Forms.TextBox textBoxSum;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.ComboBox comboBoxClients;
+        private System.Windows.Forms.Label labelClient;
     }
 }

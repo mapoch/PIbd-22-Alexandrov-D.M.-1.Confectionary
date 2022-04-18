@@ -26,7 +26,7 @@ namespace ConfectionaryDatabaseImplement.Implements
             }
 
             using var context = new ConfectionaryDatabase();
-            return context.Clients.Where(rec => rec.FIO.Contains(model.FIO))
+            return context.Clients.Where(rec => rec.Login.Contains(model.Login) && rec.Password.Contains(model.Password))
                 .Select(CreateModel).ToList();
         }
 

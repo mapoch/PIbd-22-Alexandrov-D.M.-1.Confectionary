@@ -34,9 +34,9 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
 
         public void CreateOrUpdate(ClientBindingModel model)
         {
-            var element = clientStorage.GetElement(new ClientBindingModel { FIO = model.FIO });
+            var element = clientStorage.GetElement(new ClientBindingModel { Login = model.Login });
 
-            if (element != null && element.Id != model.Id) throw new Exception("Уже есть компонент с таким названием");
+            if (element != null && element.Id != model.Id) throw new Exception("Уже есть клиент с таким логином");
 
             if (model.Id.HasValue)
             {

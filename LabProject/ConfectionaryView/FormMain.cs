@@ -38,7 +38,9 @@ namespace ConfectionaryView
                 dataGridViewOrders.DataSource = list;
                 dataGridViewOrders.Columns[0].Visible = false;
                 dataGridViewOrders.Columns[1].Visible = false;
-                dataGridViewOrders.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridViewOrders.Columns[2].Visible = false;
+                dataGridViewOrders.Columns[3].Visible = false;
+                dataGridViewOrders.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
             catch (Exception ex)
             {
@@ -62,6 +64,12 @@ namespace ConfectionaryView
             var form = Program.Container.Resolve<FormPastries>();
             form.ShowDialog();
             LoadData();
+        }
+
+        private void клиентыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormClients>();
+            form.ShowDialog();
         }
 
         private void buttonCreate_Click(object sender, EventArgs e)

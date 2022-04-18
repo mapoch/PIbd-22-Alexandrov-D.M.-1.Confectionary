@@ -16,6 +16,7 @@ namespace ConfectionaryDatabaseImplement.Implements
         public List<OrderViewModel> GetFullList()
         {
             using var context = new ConfectionaryDatabase();
+            //foreach (var ord in context.Orders) Delete(new OrderBindingModel { Id = ord.Id});
             return context.Orders.Include(rec => rec.Pastry).Select(CreateModel).ToList();
         }
 
@@ -100,6 +101,15 @@ namespace ConfectionaryDatabaseImplement.Implements
 
         private static OrderViewModel CreateModel(Order order)
         {
+            int? clientId = null;
+            string? clientFIO = null;
+
+            if (order.Client != null)
+            {
+                clientId = order.ClientId;
+                clientFIO = order.Client.FIO;
+            }
+
             return new OrderViewModel
             {
                 Id = order.Id,
@@ -110,8 +120,8 @@ namespace ConfectionaryDatabaseImplement.Implements
                 Status = order.Status.ToString(),
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
-                ClientId = order.ClientId,
-                ClientFIO = order.Client.FIO
+                ClientId = clientId,
+                ClientFIO = clientFIO
             };
         }
     }

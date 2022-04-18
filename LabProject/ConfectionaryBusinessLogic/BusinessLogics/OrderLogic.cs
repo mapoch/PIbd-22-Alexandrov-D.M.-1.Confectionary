@@ -34,7 +34,8 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
         public void CreateOrder(CreateOrderBindingModel model)
         {
             OrderBindingModel order = new OrderBindingModel 
-            { PastryId = model.PastryId, Count = model.Count, Sum = model.Sum, Status = 0, DateCreate = DateTime.Now };
+            { PastryId = model.PastryId, Count = model.Count, Sum = model.Sum, Status = 0, 
+                DateCreate = DateTime.Now, ClientId = model.ClientId };
 
             orderStorage.Insert(order);
         }

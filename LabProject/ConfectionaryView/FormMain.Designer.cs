@@ -43,6 +43,7 @@ namespace ConfectionaryView
             this.списокИзделийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.компонентыПоИзделиямToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.списокЗаказовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.клиентыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewOrders)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -117,7 +118,8 @@ namespace ConfectionaryView
             // 
             this.toolStripMenuItemLists.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemComponent,
-            this.toolStripMenuItemPastry});
+            this.toolStripMenuItemPastry,
+            this.клиентыToolStripMenuItem});
             this.toolStripMenuItemLists.Name = "toolStripMenuItemLists";
             this.toolStripMenuItemLists.Size = new System.Drawing.Size(117, 24);
             this.toolStripMenuItemLists.Text = "Справочники";
@@ -125,14 +127,14 @@ namespace ConfectionaryView
             // toolStripMenuItemComponent
             // 
             this.toolStripMenuItemComponent.Name = "toolStripMenuItemComponent";
-            this.toolStripMenuItemComponent.Size = new System.Drawing.Size(182, 26);
+            this.toolStripMenuItemComponent.Size = new System.Drawing.Size(224, 26);
             this.toolStripMenuItemComponent.Text = "Компоненты";
             this.toolStripMenuItemComponent.Click += new System.EventHandler(this.toolStripMenuItemComponent_Click);
             // 
             // toolStripMenuItemPastry
             // 
             this.toolStripMenuItemPastry.Name = "toolStripMenuItemPastry";
-            this.toolStripMenuItemPastry.Size = new System.Drawing.Size(182, 26);
+            this.toolStripMenuItemPastry.Size = new System.Drawing.Size(224, 26);
             this.toolStripMenuItemPastry.Text = "Изделия";
             this.toolStripMenuItemPastry.Click += new System.EventHandler(this.toolStripMenuItemPastry_Click);
             // 
@@ -179,6 +181,13 @@ namespace ConfectionaryView
             this.списокЗаказовToolStripMenuItem.Text = "Список заказов";
             this.списокЗаказовToolStripMenuItem.Click += new System.EventHandler(this.списокЗаказовToolStripMenuItem_Click);
             // 
+            // клиентыToolStripMenuItem
+            // 
+            this.клиентыToolStripMenuItem.Name = "клиентыToolStripMenuItem";
+            this.клиентыToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.клиентыToolStripMenuItem.Text = "Клиенты";
+            this.клиентыToolStripMenuItem.Click += new System.EventHandler(this.клиентыToolStripMenuItem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -218,6 +227,7 @@ namespace ConfectionaryView
         private System.Windows.Forms.ToolStripMenuItem списокИзделийToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem компонентыПоИзделиямToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem списокЗаказовToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem клиентыToolStripMenuItem;
     }
 }
 
