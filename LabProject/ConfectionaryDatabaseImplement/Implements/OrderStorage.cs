@@ -27,16 +27,8 @@ namespace ConfectionaryDatabaseImplement.Implements
             }
 
             using var context = new ConfectionaryDatabase();
-            if (model.DateFrom == null && model.DateTo == null)
-            {
-                return context.Orders.Include(rec => rec.Pastry).
-                    Where(rec => rec.PastryId == model.PastryId).Select(CreateModel).ToList();
-            }
-            else 
-            {
-                return context.Orders.Include(rec => rec.Pastry).Where(rec => rec.PastryId == model.PastryId 
-                || (rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)).Select(CreateModel).ToList();
-            }
+            return context.Orders.Include(rec => rec.Pastry).Where(rec => (model.Id.HasValue && rec.Id.Equals(model.Id)) ||
+            (rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)).Select(CreateModel).ToList();
         }
 
         public OrderViewModel GetElement(OrderBindingModel model)

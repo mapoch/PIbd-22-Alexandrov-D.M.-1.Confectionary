@@ -27,16 +27,9 @@ namespace ConfectionaryFileImplement.Implements
         {
             if (model == null) return null;
 
-            if (model.DateFrom == null && model.DateTo == null)
-            {
-                return source.Orders.Where(rec => rec.Id.Equals(model.Id))
-                    .Select(CreateModel).ToList();
-            }
-            else
-            {
-                return source.Orders.Where(rec => 
-                rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo).Select(CreateModel).ToList();
-            }
+            return source.Orders.Where(rec => (model.Id.HasValue && rec.Id.Equals(model.Id)) ||
+            (rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo))
+                .Select(CreateModel).ToList();
         }
 
         public OrderViewModel GetElement(OrderBindingModel model)
