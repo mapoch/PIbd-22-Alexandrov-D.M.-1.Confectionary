@@ -34,7 +34,8 @@ namespace ConfectionaryListImplement.Implements
             foreach (var order in source.Orders)
             {
                 if ((model.Id.HasValue && order.Id.Equals(model.Id)) ||
-                    (order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo)) 
+                    (model.DateFrom.HasValue && model.DateTo.HasValue &&
+                    order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo)) 
                     result.Add(CreateModel(order));
             }
             return result;
