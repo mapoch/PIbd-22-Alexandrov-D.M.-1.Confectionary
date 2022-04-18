@@ -34,7 +34,6 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
 
         public List<ReportPastryComponentViewModel> GetPastryComponent()
         {
-            var components = componentStorage.GetFullList();
             var pastries = pastryStorage.GetFullList();
             var list = new List<ReportPastryComponentViewModel>();
             foreach (var pastry in pastries)
@@ -45,14 +44,11 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
                     Components = new List<Tuple<string, int>>(),
                     TotalCount = 0
                 };
-                foreach (var component in components)
+                foreach (var component in pastry.PastryComponents)
                 {
-                    if (pastry.PastryComponents.ContainsKey(component.Id))
-                    {
-                        record.Components.Add(new Tuple<string, int>(component.ComponentName, 
-                            pastry.PastryComponents[component.Id].Item2));
-                        record.TotalCount += pastry.PastryComponents[component.Id].Item2;
-                    }
+                    record.Components.Add(new Tuple<string, int>(component.Value.Item1,
+                        component.Value.Item2));
+                    record.TotalCount += component.Value.Item2;
                 }
                 list.Add(record);
             }
