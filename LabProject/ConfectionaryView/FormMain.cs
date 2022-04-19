@@ -17,12 +17,17 @@ namespace ConfectionaryView
     {
         private readonly IOrderLogic orderLogic;
         private readonly IReportLogic reportLogic;
+        private readonly IImplementerLogic implementerLogic;
+        private readonly IWorkProcess workProcess;
 
-        public FormMain(IOrderLogic _orderLogic, IReportLogic _reportLogic)
+        public FormMain(IOrderLogic _orderLogic, IReportLogic _reportLogic, 
+            IImplementerLogic _implementerLogic, IWorkProcess _workProcess)
         {
             InitializeComponent();
             orderLogic = _orderLogic;
             reportLogic = _reportLogic;
+            implementerLogic = _implementerLogic;
+            workProcess = _workProcess;
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -40,7 +45,9 @@ namespace ConfectionaryView
                 dataGridViewOrders.Columns[1].Visible = false;
                 dataGridViewOrders.Columns[2].Visible = false;
                 dataGridViewOrders.Columns[3].Visible = false;
-                dataGridViewOrders.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridViewOrders.Columns[4].Visible = false;
+                dataGridViewOrders.Columns[5].Visible = false;
+                dataGridViewOrders.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
             catch (Exception ex)
             {
@@ -66,51 +73,11 @@ namespace ConfectionaryView
             LoadData();
         }
 
-        private void клиентыToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var form = Program.Container.Resolve<FormClients>();
-            form.ShowDialog();
-        }
-
         private void buttonCreate_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FormCreateOrder>();
             form.ShowDialog();
             LoadData();
-        }
-
-        private void buttonTakeInWork_Click(object sender, EventArgs e)
-        {
-            if (dataGridViewOrders.SelectedRows.Count == 1)
-            {
-                int id = Convert.ToInt32(dataGridViewOrders.SelectedRows[0].Cells[0].Value);
-                try
-                {
-                    orderLogic.TakeOrderInWork(new ChangeStatusBindingModel { OrderId = id });
-                    LoadData();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void buttonReady_Click(object sender, EventArgs e)
-        {
-            if (dataGridViewOrders.SelectedRows.Count == 1)
-            {
-                int id = Convert.ToInt32(dataGridViewOrders.SelectedRows[0].Cells[0].Value);
-                try
-                {
-                    orderLogic.FinishOrder(new ChangeStatusBindingModel { OrderId = id });
-                    LoadData();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
         }
 
         private void buttonIssue_Click(object sender, EventArgs e)
@@ -154,6 +121,24 @@ namespace ConfectionaryView
         {
             var form = Program.Container.Resolve<FormReportOrders>();
             form.ShowDialog();
+        }
+
+        private void клиентыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormClients>();
+            form.ShowDialog();
+        }
+
+        private void исполнителиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormImplementers>();
+            form.ShowDialog();
+        }
+
+        private void запускРаботToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            workProcess.DoWork(implementerLogic, orderLogic);
+            LoadData();
         }
     }
 }

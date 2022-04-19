@@ -11,6 +11,8 @@ namespace ConfectionaryContracts.ViewModels
         public int PastryId { get; set; }
         public int? ClientId { get; set; }
         public string? ClientFIO { get; set; }
+        public int? ImplementerId { get; set; }
+        public string? ImplementerFIO { get; set; }
 
         [DisplayName("Изделие")]
         public string PastryName { get; set; }

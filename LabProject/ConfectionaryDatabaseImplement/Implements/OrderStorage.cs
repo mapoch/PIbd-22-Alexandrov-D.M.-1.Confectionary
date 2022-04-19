@@ -17,7 +17,8 @@ namespace ConfectionaryDatabaseImplement.Implements
         {
             using var context = new ConfectionaryDatabase();
             //foreach (var ord in context.Orders) Delete(new OrderBindingModel { Id = ord.Id});
-            return context.Orders.Include(rec => rec.Pastry).Include(rec => rec.Client).Select(CreateModel).ToList();
+            return context.Orders.Include(rec => rec.Pastry).Include(rec => rec.Client)
+                .Include(rec => rec.Implementer).Select(CreateModel).ToList();
         }
 
         public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
@@ -32,8 +33,11 @@ namespace ConfectionaryDatabaseImplement.Implements
                 && rec.DateCreate.Date == model.DateCreate.Date) ||
                 (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date
                 && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
-                (model.ClientId.HasValue && rec.ClientId == model.ClientId))
-                .Include(rec => rec.Pastry).Include(rec => rec.Client).Select(CreateModel).ToList();
+                (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
+                (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId) ||
+                (model.SearchStatus.HasValue && model.SearchStatus.Value == rec.Status))
+                .Include(rec => rec.Pastry).Include(rec => rec.Client).Include(rec => rec.Implementer)
+                .Select(CreateModel).ToList();
         }
 
         public OrderViewModel GetElement(OrderBindingModel model)
@@ -44,7 +48,7 @@ namespace ConfectionaryDatabaseImplement.Implements
             }
 
             using var context = new ConfectionaryDatabase();
-            var order = context.Orders.Include(rec => rec.Pastry).
+            var order = context.Orders.Include(rec => rec.Pastry).Include(rec => rec.Client).Include(rec => rec.Implementer).
                 FirstOrDefault(rec => rec.PastryId == model.PastryId || rec.Id == model.Id);
             return order != null ? CreateModel(order) : null;
         }
@@ -96,18 +100,29 @@ namespace ConfectionaryDatabaseImplement.Implements
             order.DateImplement = model.DateImplement;
             order.ClientId = model.ClientId;
             order.Client = context.Clients.FirstOrDefault(rec => rec.Id == model.ClientId);
+            order.ImplementerId = model.ImplementerId;
+            order.Implementer = context.Implementers.FirstOrDefault(rec => rec.Id == model.ImplementerId);
             return order;
         }
 
         private static OrderViewModel CreateModel(Order order)
         {
             int? clientId = null;
-            string? clientFIO = null;
+            string clientFIO = null;
+
+            int? implementerId = null;
+            string implementerFIO = null;
 
             if (order.Client != null)
             {
                 clientId = order.ClientId;
                 clientFIO = order.Client.FIO;
+            }
+
+            if (order.Implementer != null)
+            {
+                implementerId = order.ImplementerId;
+                implementerFIO = order.Implementer.FIO;
             }
 
             return new OrderViewModel
@@ -121,7 +136,9 @@ namespace ConfectionaryDatabaseImplement.Implements
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
                 ClientId = clientId,
-                ClientFIO = clientFIO
+                ClientFIO = clientFIO,
+                ImplementerId = implementerId,
+                ImplementerFIO = implementerFIO
             };
         }
     }

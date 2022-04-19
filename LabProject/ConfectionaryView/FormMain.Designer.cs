@@ -31,19 +31,19 @@ namespace ConfectionaryView
         {
             this.dataGridViewOrders = new System.Windows.Forms.DataGridView();
             this.buttonCreate = new System.Windows.Forms.Button();
-            this.buttonTakeInWork = new System.Windows.Forms.Button();
-            this.buttonReady = new System.Windows.Forms.Button();
             this.buttonIssue = new System.Windows.Forms.Button();
             this.buttonRefresh = new System.Windows.Forms.Button();
             this.toolStripMenuItemLists = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemComponent = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemPastry = new System.Windows.Forms.ToolStripMenuItem();
+            this.клиентыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.отчётыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.списокИзделийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.компонентыПоИзделиямToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.списокЗаказовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.клиентыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.запускРаботToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.исполнителиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewOrders)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -70,32 +70,10 @@ namespace ConfectionaryView
             this.buttonCreate.UseVisualStyleBackColor = false;
             this.buttonCreate.Click += new System.EventHandler(this.buttonCreate_Click);
             // 
-            // buttonTakeInWork
-            // 
-            this.buttonTakeInWork.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonTakeInWork.Location = new System.Drawing.Point(862, 91);
-            this.buttonTakeInWork.Name = "buttonTakeInWork";
-            this.buttonTakeInWork.Size = new System.Drawing.Size(192, 45);
-            this.buttonTakeInWork.TabIndex = 3;
-            this.buttonTakeInWork.Text = "Отдать на выполнение";
-            this.buttonTakeInWork.UseVisualStyleBackColor = false;
-            this.buttonTakeInWork.Click += new System.EventHandler(this.buttonTakeInWork_Click);
-            // 
-            // buttonReady
-            // 
-            this.buttonReady.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonReady.Location = new System.Drawing.Point(862, 142);
-            this.buttonReady.Name = "buttonReady";
-            this.buttonReady.Size = new System.Drawing.Size(192, 45);
-            this.buttonReady.TabIndex = 4;
-            this.buttonReady.Text = "Заказ готов";
-            this.buttonReady.UseVisualStyleBackColor = false;
-            this.buttonReady.Click += new System.EventHandler(this.buttonReady_Click);
-            // 
             // buttonIssue
             // 
             this.buttonIssue.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonIssue.Location = new System.Drawing.Point(862, 193);
+            this.buttonIssue.Location = new System.Drawing.Point(862, 91);
             this.buttonIssue.Name = "buttonIssue";
             this.buttonIssue.Size = new System.Drawing.Size(192, 45);
             this.buttonIssue.TabIndex = 5;
@@ -119,7 +97,8 @@ namespace ConfectionaryView
             this.toolStripMenuItemLists.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemComponent,
             this.toolStripMenuItemPastry,
-            this.клиентыToolStripMenuItem});
+            this.клиентыToolStripMenuItem,
+            this.исполнителиToolStripMenuItem});
             this.toolStripMenuItemLists.Name = "toolStripMenuItemLists";
             this.toolStripMenuItemLists.Size = new System.Drawing.Size(117, 24);
             this.toolStripMenuItemLists.Text = "Справочники";
@@ -127,16 +106,23 @@ namespace ConfectionaryView
             // toolStripMenuItemComponent
             // 
             this.toolStripMenuItemComponent.Name = "toolStripMenuItemComponent";
-            this.toolStripMenuItemComponent.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItemComponent.Size = new System.Drawing.Size(182, 26);
             this.toolStripMenuItemComponent.Text = "Компоненты";
             this.toolStripMenuItemComponent.Click += new System.EventHandler(this.toolStripMenuItemComponent_Click);
             // 
             // toolStripMenuItemPastry
             // 
             this.toolStripMenuItemPastry.Name = "toolStripMenuItemPastry";
-            this.toolStripMenuItemPastry.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItemPastry.Size = new System.Drawing.Size(182, 26);
             this.toolStripMenuItemPastry.Text = "Изделия";
             this.toolStripMenuItemPastry.Click += new System.EventHandler(this.toolStripMenuItemPastry_Click);
+            // 
+            // клиентыToolStripMenuItem
+            // 
+            this.клиентыToolStripMenuItem.Name = "клиентыToolStripMenuItem";
+            this.клиентыToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+            this.клиентыToolStripMenuItem.Text = "Клиенты";
+            this.клиентыToolStripMenuItem.Click += new System.EventHandler(this.клиентыToolStripMenuItem_Click);
             // 
             // menuStrip
             // 
@@ -144,7 +130,8 @@ namespace ConfectionaryView
             this.menuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemLists,
-            this.отчётыToolStripMenuItem});
+            this.отчётыToolStripMenuItem,
+            this.запускРаботToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(1066, 28);
@@ -181,12 +168,19 @@ namespace ConfectionaryView
             this.списокЗаказовToolStripMenuItem.Text = "Список заказов";
             this.списокЗаказовToolStripMenuItem.Click += new System.EventHandler(this.списокЗаказовToolStripMenuItem_Click);
             // 
-            // клиентыToolStripMenuItem
+            // запускРаботToolStripMenuItem
             // 
-            this.клиентыToolStripMenuItem.Name = "клиентыToolStripMenuItem";
-            this.клиентыToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.клиентыToolStripMenuItem.Text = "Клиенты";
-            this.клиентыToolStripMenuItem.Click += new System.EventHandler(this.клиентыToolStripMenuItem_Click);
+            this.запускРаботToolStripMenuItem.Name = "запускРаботToolStripMenuItem";
+            this.запускРаботToolStripMenuItem.Size = new System.Drawing.Size(114, 24);
+            this.запускРаботToolStripMenuItem.Text = "Запуск работ";
+            this.запускРаботToolStripMenuItem.Click += new System.EventHandler(this.запускРаботToolStripMenuItem_Click);
+            // 
+            // исполнителиToolStripMenuItem
+            // 
+            this.исполнителиToolStripMenuItem.Name = "исполнителиToolStripMenuItem";
+            this.исполнителиToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.исполнителиToolStripMenuItem.Text = "Исполнители";
+            this.исполнителиToolStripMenuItem.Click += new System.EventHandler(this.исполнителиToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -195,8 +189,6 @@ namespace ConfectionaryView
             this.ClientSize = new System.Drawing.Size(1066, 512);
             this.Controls.Add(this.buttonRefresh);
             this.Controls.Add(this.buttonIssue);
-            this.Controls.Add(this.buttonReady);
-            this.Controls.Add(this.buttonTakeInWork);
             this.Controls.Add(this.buttonCreate);
             this.Controls.Add(this.dataGridViewOrders);
             this.Controls.Add(this.menuStrip);
@@ -215,8 +207,6 @@ namespace ConfectionaryView
         #endregion
         private System.Windows.Forms.DataGridView dataGridViewOrders;
         private System.Windows.Forms.Button buttonCreate;
-        private System.Windows.Forms.Button buttonTakeInWork;
-        private System.Windows.Forms.Button buttonReady;
         private System.Windows.Forms.Button buttonIssue;
         private System.Windows.Forms.Button buttonRefresh;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemLists;
@@ -228,6 +218,8 @@ namespace ConfectionaryView
         private System.Windows.Forms.ToolStripMenuItem компонентыПоИзделиямToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem списокЗаказовToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem клиентыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem исполнителиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem запускРаботToolStripMenuItem;
     }
 }
 

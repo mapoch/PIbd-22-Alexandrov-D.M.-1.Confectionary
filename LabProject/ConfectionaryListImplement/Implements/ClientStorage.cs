@@ -77,11 +77,11 @@ namespace ConfectionaryListImplement.Implements
 
         public void Delete(ClientBindingModel model)
         {
-            for (int i = 0; i < source.Components.Count; ++i)
+            for (int i = 0; i < source.Clients.Count; ++i)
             {
-                if (source.Components[i].Id == model.Id.Value)
+                if (source.Clients[i].Id == model.Id.Value)
                 {
-                    source.Components.RemoveAt(i);
+                    source.Clients.RemoveAt(i);
                     return;
                 }
             }

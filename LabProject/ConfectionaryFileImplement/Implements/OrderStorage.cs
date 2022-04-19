@@ -31,7 +31,9 @@ namespace ConfectionaryFileImplement.Implements
                 && rec.DateCreate.Date == model.DateCreate.Date) ||
                 (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date
                 && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
-                (model.ClientId.HasValue && rec.ClientId == model.ClientId))
+                (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
+                (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId) ||
+                (model.SearchStatus.HasValue && model.SearchStatus.Value == rec.Status))
                 .Select(CreateModel).ToList();
         }
 
@@ -73,6 +75,7 @@ namespace ConfectionaryFileImplement.Implements
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
             order.ClientId = model.ClientId;
+            order.ImplementerId = model.ImplementerId;
             return order;
         }
 
@@ -80,6 +83,7 @@ namespace ConfectionaryFileImplement.Implements
         {
             string pastryName = source.Pastries.FirstOrDefault(rec => rec.Id == order.PastryId).PastryName;
             string clientFIO = source.Clients.FirstOrDefault(rec => rec.Id == order.ClientId).FIO;
+            string implementerFIO = source.Implementers.FirstOrDefault(rec => rec.Id == order.ImplementerId).FIO;
 
             return new OrderViewModel
             {
@@ -92,7 +96,9 @@ namespace ConfectionaryFileImplement.Implements
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
                 ClientId = order.ClientId,
-                ClientFIO = clientFIO
+                ClientFIO = clientFIO,
+                ImplementerId = order.ImplementerId,
+                ImplementerFIO = implementerFIO
             };
         }
     }
