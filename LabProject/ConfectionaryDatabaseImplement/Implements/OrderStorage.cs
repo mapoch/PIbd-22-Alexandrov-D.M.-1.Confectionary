@@ -44,7 +44,7 @@ namespace ConfectionaryDatabaseImplement.Implements
             }
 
             using var context = new ConfectionaryDatabase();
-            var order = context.Orders.Include(rec => rec.Pastry).
+            var order = context.Orders.Include(rec => rec.Pastry).Include(rec => rec.Client).
                 FirstOrDefault(rec => rec.PastryId == model.PastryId || rec.Id == model.Id);
             return order != null ? CreateModel(order) : null;
         }
@@ -102,7 +102,7 @@ namespace ConfectionaryDatabaseImplement.Implements
         private static OrderViewModel CreateModel(Order order)
         {
             int? clientId = null;
-            string? clientFIO = null;
+            string clientFIO = null;
 
             if (order.Client != null)
             {
