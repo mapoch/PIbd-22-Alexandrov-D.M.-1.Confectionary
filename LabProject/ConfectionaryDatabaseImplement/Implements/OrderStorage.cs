@@ -17,7 +17,7 @@ namespace ConfectionaryDatabaseImplement.Implements
         {
             using var context = new ConfectionaryDatabase();
             //foreach (var ord in context.Orders) Delete(new OrderBindingModel { Id = ord.Id});
-            return context.Orders.Include(rec => rec.Pastry).Select(CreateModel).ToList();
+            return context.Orders.Include(rec => rec.Pastry).Include(rec => rec.Client).Select(CreateModel).ToList();
         }
 
         public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
@@ -33,7 +33,7 @@ namespace ConfectionaryDatabaseImplement.Implements
                 (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date
                 && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
                 (model.ClientId.HasValue && rec.ClientId == model.ClientId))
-                .Select(CreateModel).ToList();
+                .Include(rec => rec.Pastry).Include(rec => rec.Client).Select(CreateModel).ToList();
         }
 
         public OrderViewModel GetElement(OrderBindingModel model)

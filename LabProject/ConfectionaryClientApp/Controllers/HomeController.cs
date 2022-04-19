@@ -85,7 +85,7 @@ namespace ConfectionaryClientApp.Controllers
             if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password))
             {
                 Program.Client =
-                APIClient.GetRequest<ClientViewModel>($"api/Client/Login?login={login}&password={password}");
+                APIClient.GetRequest<ClientViewModel>($"api/client/login?login={login}&password={password}");
                 if (Program.Client == null)
                 {
                     throw new Exception("Неверный логин/пароль");
@@ -125,7 +125,7 @@ namespace ConfectionaryClientApp.Controllers
         public IActionResult Create()
         {
             ViewBag.Pastries =
-            APIClient.GetRequest<List<PastryViewModel>>("api/main/getproductlist");
+            APIClient.GetRequest<List<PastryViewModel>>("api/main/getpastrylist");
             return View();
         }
 
@@ -136,21 +136,22 @@ namespace ConfectionaryClientApp.Controllers
             {
                 return;
             }
-            APIClient.PostRequest("api/main/getorderlist", new OrderBindingModel
+            APIClient.PostRequest("api/main/createorder", new OrderBindingModel
             {
                 PastryId = pastry,
                 Count = count,
-                Sum = sum
+                Sum = sum,
+                ClientId = Program.Client.Id
             });
             Response.Redirect("Index");
         }
 
         [HttpPost]
-        public decimal Calc(decimal count, int product)
+        public decimal Calc(decimal count, int pastry)
         {
-            PastryViewModel prod =
-            APIClient.GetRequest<PastryViewModel>($"api/main/getproduct?productId={product}");
-            return count * prod.Price;
+            PastryViewModel pastr =
+            APIClient.GetRequest<PastryViewModel>($"api/main/getpastry?pastryId={pastry}");
+            return count * pastr.Price;
         }
     }
 }

@@ -39,10 +39,10 @@ namespace ConfectionaryView
             List<ClientViewModel> listC = logicC.Read(null);
             if (listC != null)
             {
-                comboBoxPastry.DisplayMember = "Login";
-                comboBoxPastry.ValueMember = "Id";
-                comboBoxPastry.DataSource = listC;
-                comboBoxPastry.SelectedItem = null;
+                comboBoxClients.DisplayMember = "FIO";
+                comboBoxClients.ValueMember = "Id";
+                comboBoxClients.DataSource = listC;
+                comboBoxClients.SelectedItem = null;
             }
         }
         
@@ -82,6 +82,11 @@ namespace ConfectionaryView
                 return;
             }
             if (comboBoxPastry.SelectedValue == null)
+            {
+                MessageBox.Show("Выберите изделие", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (comboBoxClients.SelectedValue == null)
             {
                 MessageBox.Show("Выберите изделие", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
