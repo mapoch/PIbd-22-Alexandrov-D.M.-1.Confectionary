@@ -127,7 +127,7 @@ namespace ConfectionaryView
             using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                reportLogic.SaveComponentsToWordFile(new ReportBindingModel
+                reportLogic.SavePastriesToWordFile(new ReportBindingModel
                 {
                     FileName = dialog.FileName
                 });
@@ -158,6 +158,20 @@ namespace ConfectionaryView
         {
             var form = Program.Container.Resolve<FormReplenish>();
             form.ShowDialog();
+        }
+
+        private void списокСкладовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                reportLogic.SaveWarehousesToWordFile(new ReportBindingModel
+                {
+                    FileName = dialog.FileName
+                });
+                MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+            }
         }
     }
 }

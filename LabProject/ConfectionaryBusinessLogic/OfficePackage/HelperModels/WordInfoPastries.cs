@@ -7,10 +7,8 @@ using ConfectionaryContracts.ViewModels;
 
 namespace ConfectionaryBusinessLogic.OfficePackage.HelperModels
 {
-    public class WordInfo
+    public class WordInfoPastries : WordInfoAbstract
     {
-        public string FileName { get; set; }
-        public string Title { get; set; }
         public List<PastryViewModel> Pastries { get; set; }
     }
 }

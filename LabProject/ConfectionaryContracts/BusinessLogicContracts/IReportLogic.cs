@@ -12,7 +12,8 @@ namespace ConfectionaryContracts.BusinessLogicContracts
     {
         List<ReportPastryComponentViewModel> GetPastryComponent();
         List<ReportOrdersViewModel> GetOrders(ReportBindingModel model);
-        void SaveComponentsToWordFile(ReportBindingModel model);
+        void SavePastriesToWordFile(ReportBindingModel model);
+        void SaveWarehousesToWordFile(ReportBindingModel model);
         void SavePastryComponentToExcelFile(ReportBindingModel model);
         void SaveOrdersToPdfFile(ReportBindingModel model);
     }

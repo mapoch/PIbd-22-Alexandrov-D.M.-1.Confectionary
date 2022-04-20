@@ -17,16 +17,19 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
         private readonly IComponentStorage componentStorage;
         private readonly IPastryStorage pastryStorage;
         private readonly IOrderStorage orderStorage;
+        private readonly IWarehouseStorage warehouseStorage;
         private readonly AbstractSaveToExcel saveToExcel;
         private readonly AbstractSaveToWord saveToWord;
         private readonly AbstractSaveToPdf saveToPdf;
         public ReportLogic(IPastryStorage _pastryStorage, IComponentStorage _componentStorage, 
-            IOrderStorage _orderStorage, AbstractSaveToExcel _saveToExcel, 
+            IOrderStorage _orderStorage, IWarehouseStorage _warehouseStorage, 
+            AbstractSaveToExcel _saveToExcel, 
             AbstractSaveToWord _saveToWord, AbstractSaveToPdf _saveToPdf)
         {
             pastryStorage = _pastryStorage;
             componentStorage = _componentStorage;
             orderStorage = _orderStorage;
+            warehouseStorage = _warehouseStorage;
             saveToExcel = _saveToExcel;
             saveToWord = _saveToWord;
             saveToPdf = _saveToPdf;
@@ -63,13 +66,23 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
            .ToList();
         }
 
-        public void SaveComponentsToWordFile(ReportBindingModel model)
+        public void SavePastriesToWordFile(ReportBindingModel model)
         {
-            saveToWord.CreateDoc(new WordInfo
+            saveToWord.CreateDoc(new WordInfoPastries
             {
                 FileName = model.FileName,
                 Title = "Список изделий",
                 Pastries = pastryStorage.GetFullList()
+            });
+        }
+
+        public void SaveWarehousesToWordFile(ReportBindingModel model)
+        {
+            saveToWord.CreateDoc(new WordInfoWarehouses
+            {
+                FileName = model.FileName,
+                Title = "Список складов",
+                Warehouses = warehouseStorage.GetFullList()
             });
         }
 

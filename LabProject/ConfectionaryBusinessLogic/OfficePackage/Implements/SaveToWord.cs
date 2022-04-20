@@ -57,7 +57,7 @@ namespace ConfectionaryBusinessLogic.OfficePackage.Implements
             return null;
         }
 
-        protected override void CreateWord(WordInfo info)
+        protected override void CreateWord(WordInfoAbstract info)
         {
             wordDocument = WordprocessingDocument.Create(info.FileName, WordprocessingDocumentType.Document);
             MainDocumentPart mainPart = wordDocument.AddMainDocumentPart();
@@ -92,7 +92,91 @@ namespace ConfectionaryBusinessLogic.OfficePackage.Implements
             }
         }
 
-        protected override void SaveWord(WordInfo info)
+        protected override void CreateTable(WordTable table)
+        {
+            if (table != null)
+            {
+                Table docTable = new Table();
+
+                var tableProps = new TableProperties();
+                tableProps.AppendChild(new TableLayout { Type = TableLayoutValues.Fixed });
+                tableProps.AppendChild(new TableBorders(
+                    new TopBorder() { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 },
+                    new RightBorder() { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 },
+                    new LeftBorder() { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 },
+                    new BottomBorder() { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 },
+                    new InsideVerticalBorder() { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 },
+                    new InsideHorizontalBorder() { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 }));
+                tableProps.AppendChild(new TableWidth { Type = TableWidthUnitValues.Auto });
+                docTable.AppendChild(tableProps);
+
+                TableGrid tableGrid = new TableGrid();
+                for (int j = 0; j < table.Texts.Count; ++j)
+                {
+                    tableGrid.AppendChild(new GridColumn() { Width = "3413" });
+                }
+                docTable.AppendChild(tableGrid);
+
+                TableRow clmns = new TableRow();
+                for (int j = 0; j < table.Columns.Count; ++j)
+                {
+                    var docParagraph = new Paragraph();
+
+                    var parProps = new ParagraphProperties();
+                    parProps.AppendChild(new Justification() { Val = JustificationValues.Center });
+                    parProps.AppendChild(new SpacingBetweenLines { Before = "120", After = "0" });
+                    docParagraph.AppendChild(parProps);
+
+                    var docRun = new Run();
+
+                    var runProps = new RunProperties();
+                    runProps.AppendChild(new RunFonts() { Ascii = "Times New Roman", ComplexScript = "Times New Roman", HighAnsi = "Times New Roman" });
+                    runProps.AppendChild(new FontSize { Val = "22" });
+                    runProps.AppendChild(new Bold());
+
+                    docRun.AppendChild(runProps);
+                    docRun.AppendChild(new Text { Text = table.Texts[0].GetValue(j).ToString(), Space = SpaceProcessingModeValues.Preserve });
+                    docParagraph.AppendChild(docRun);
+
+                    TableCell docCell = new TableCell();
+                    docCell.AppendChild(docParagraph);
+                    clmns.AppendChild(docCell);
+                }
+                docTable.AppendChild(clmns);
+
+                for (int i = 1; i < table.Texts.Count; ++i)
+                {
+                    TableRow docRow = new TableRow();
+
+                    for (int j = 0; j < table.Columns.Count; ++j)
+                    {
+                        var docParagraph = new Paragraph();
+
+                        var parProps = new ParagraphProperties();
+                        parProps.AppendChild(new Justification() { Val = JustificationValues.Center });
+                        parProps.AppendChild(new SpacingBetweenLines { Before = "120", After = "0" });
+                        docParagraph.AppendChild(parProps);
+
+                        var docRun = new Run();
+
+                        var runProps = new RunProperties();
+                        runProps.AppendChild(new RunFonts() { Ascii = "Times New Roman", ComplexScript = "Times New Roman", HighAnsi = "Times New Roman" });
+                        runProps.AppendChild(new FontSize { Val = "22" });
+
+                        docRun.AppendChild(runProps);
+                        docRun.AppendChild(new Text { Text = table.Texts[i].GetValue(j).ToString(), Space = SpaceProcessingModeValues.Preserve });
+                        docParagraph.AppendChild(docRun);
+
+                        TableCell docCell = new TableCell();
+                        docCell.AppendChild(docParagraph);
+                        docRow.AppendChild(docCell);
+                    }
+                    docTable.AppendChild(docRow);
+                }
+            }
+        }
+
+        protected override void SaveWord(WordInfoAbstract info)
         {
             docBody.AppendChild(CreateSectionProperties());
             wordDocument.MainDocumentPart.Document.Save();

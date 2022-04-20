@@ -10,7 +10,7 @@ namespace ConfectionaryBusinessLogic.OfficePackage
 {
     public abstract class AbstractSaveToWord
     {
-        public void CreateDoc(WordInfo info)
+        public void CreateDoc(WordInfoPastries info)
         {
             CreateWord(info);
 
@@ -39,8 +39,42 @@ namespace ConfectionaryBusinessLogic.OfficePackage
             SaveWord(info);
         }
 
-        protected abstract void CreateWord(WordInfo info);
+        public void CreateDoc(WordInfoWarehouses info)
+        {
+            CreateWord(info);
+
+            CreateParagraph(new WordParagraph
+            {
+                Texts = new List<(string, WordTextProperties)>()
+                {
+                    (info.Title, new WordTextProperties {Bold = true, Size = "24",})
+                },
+                TextProperties = new WordTextProperties
+                { Size = "24", JustificationType = WordJustificationType.Center }
+            });
+
+            List<string[]> texts = new List<string[]>();
+            foreach (var warehouse in info.Warehouses)
+            {
+                texts.Add(new string[] { warehouse.Name, warehouse.Manager, warehouse.DateCreate.ToString() });
+            }
+
+            CreateTable(new WordTable
+            {
+                ColumnsProps = new WordTextProperties { Bold = true, Size = "20" },
+                Columns = new List<string>()
+                {
+                    "Название", "Ответственный", "Дата создания"
+                },
+                Texts = texts
+            });
+
+            SaveWord(info);
+        }
+
+        protected abstract void CreateWord(WordInfoAbstract info);
         protected abstract void CreateParagraph(WordParagraph paragraph);
-        protected abstract void SaveWord(WordInfo info);
+        protected abstract void CreateTable(WordTable table);
+        protected abstract void SaveWord(WordInfoAbstract info);
     }
 }
