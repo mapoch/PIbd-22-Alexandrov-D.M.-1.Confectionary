@@ -53,7 +53,7 @@ namespace ConfectionaryView
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = Program.Container.Resolve<FormComponent>();
+            var form = Program.Container.Resolve<FormImplementer>();
             if (form.ShowDialog() == DialogResult.OK) LoadData();
         }
 
@@ -61,7 +61,7 @@ namespace ConfectionaryView
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
-                var form = Program.Container.Resolve<FormComponent>();
+                var form = Program.Container.Resolve<FormImplementer>();
                 form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 if (form.ShowDialog() == DialogResult.OK) LoadData();
             }

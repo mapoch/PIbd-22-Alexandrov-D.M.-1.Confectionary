@@ -4,14 +4,16 @@ using ConfectionaryDatabaseImplement;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConfectionaryDatabaseImplement.Migrations
 {
     [DbContext(typeof(ConfectionaryDatabase))]
-    partial class ConfectionaryDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20220420072743_Mig-6lab")]
+    partial class Mig6lab
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

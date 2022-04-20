@@ -26,8 +26,7 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
         {
             orderLogic = _orderLogic;
             var implementers = implementerLogic.Read(null);
-            ConcurrentBag<OrderViewModel> orders = new(orderLogic.Read(new
-            OrderBindingModel
+            ConcurrentBag<OrderViewModel> orders = new(orderLogic.Read(new OrderBindingModel
             { SearchStatus = OrderStatus.Принят }));
             foreach (var implementer in implementers)
             {
@@ -37,8 +36,7 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
 
         private async Task WorkerWorkAsync(ImplementerViewModel implementer, ConcurrentBag<OrderViewModel> orders)
         {
-            var runOrders = await Task.Run(() => orderLogic.Read(new
-            OrderBindingModel
+            var runOrders = await Task.Run(() => orderLogic.Read(new OrderBindingModel
             {
                 ImplementerId = implementer.Id,
                 Status = OrderStatus.Выполняется
@@ -46,12 +44,12 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
 
             foreach (var order in runOrders)
             {
-                Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) * order.Count);
+                Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) * order.Count * 1000);
                 orderLogic.FinishOrder(new ChangeStatusBindingModel
                 {
                     OrderId = order.Id
                 });
-                Thread.Sleep(implementer.PauseTime);
+                Thread.Sleep(implementer.PauseTime * 1000);
             }
             await Task.Run(() =>
             {
@@ -62,10 +60,10 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
                         orderLogic.TakeOrderInWork(new ChangeStatusBindingModel
                         { OrderId = order.Id, ImplementerId = implementer.Id });
 
-                        Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) * order.Count);
+                        Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) * order.Count * 1000);
                         orderLogic.FinishOrder(new ChangeStatusBindingModel
                         { OrderId = order.Id });
-                        Thread.Sleep(implementer.PauseTime);
+                        Thread.Sleep(implementer.PauseTime * 1000);
                     }
                 }
             });

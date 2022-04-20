@@ -55,7 +55,7 @@ namespace ConfectionaryView
             }
             if (string.IsNullOrEmpty(textBoxWorkingTime.Text))
             {
-                textBoxWorkingTime.Text = rnd.Next(5, 20).ToString();
+                textBoxWorkingTime.Text = rnd.Next(5, 10).ToString();
             }
             if (string.IsNullOrEmpty(textBoxPauseTime.Text))
             {
