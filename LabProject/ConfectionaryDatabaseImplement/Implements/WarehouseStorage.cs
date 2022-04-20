@@ -127,7 +127,7 @@ namespace ConfectionaryDatabaseImplement.Implements
                     }
                     if (required > 0) throw new Exception("Недостаточно компонентов");
                 }
-
+                context.SaveChanges();
                 transaction.Commit();
             }
             catch
