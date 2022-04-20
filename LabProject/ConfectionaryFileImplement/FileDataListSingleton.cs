@@ -124,7 +124,7 @@ namespace ConfectionaryFileImplement
                         pastryComp.Add(Convert.ToInt32(component.Element("Key").Value),
                             Convert.ToInt32(component.Element("Value").Value));
                     }
-                    list.Add(new Pastry
+                    list.Add(new Models.Pastry
                     {
                         Id = Convert.ToInt32(elem.Attribute("Id").Value),
                         PastryName = elem.Element("PastryName").Value,
