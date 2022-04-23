@@ -109,7 +109,6 @@ namespace ConfectionaryDatabaseImplement.Implements
         {
             int? clientId = null;
             string clientFIO = null;
-
             int? implementerId = null;
             string implementerFIO = null;
 
