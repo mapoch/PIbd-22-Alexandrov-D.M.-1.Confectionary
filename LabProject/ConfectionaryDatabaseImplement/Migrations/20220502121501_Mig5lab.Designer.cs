@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConfectionaryDatabaseImplement.Migrations
 {
     [DbContext(typeof(ConfectionaryDatabase))]
-    [Migration("20220406063358_Mig-5lab")]
+    [Migration("20220502121501_Mig5lab")]
     partial class Mig5lab
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,7 +68,7 @@ namespace ConfectionaryDatabaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ClientId")
+                    b.Property<int>("ClientId")
                         .HasColumnType("int");
 
                     b.Property<int>("Count")
@@ -146,7 +146,9 @@ namespace ConfectionaryDatabaseImplement.Migrations
                 {
                     b.HasOne("ConfectionaryDatabaseImplement.Models.Client", "Client")
                         .WithMany("Orders")
-                        .HasForeignKey("ClientId");
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ConfectionaryDatabaseImplement.Models.Pastry", "Pastry")
                         .WithMany("Orders")
