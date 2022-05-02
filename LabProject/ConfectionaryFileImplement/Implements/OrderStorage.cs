@@ -92,9 +92,9 @@ namespace ConfectionaryFileImplement.Implements
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
                 ClientId = order.ClientId.Value,
-                ClientFIO = source.Clients.FirstOrDefault(rec => rec.Id == order.ClientId)?.FIO
+                ClientFIO = source.Clients.FirstOrDefault(rec => rec.Id == order.ClientId)?.FIO,
                 ImplementerId = order.ImplementerId,
-                ImplementerFIO = implementerFIO
+                ImplementerFIO = source.Implementers.FirstOrDefault(rec => rec.Id == order.ImplementerId)?.FIO
             };
         }
     }

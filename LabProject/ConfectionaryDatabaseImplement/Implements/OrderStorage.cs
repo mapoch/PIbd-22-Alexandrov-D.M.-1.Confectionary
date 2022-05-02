@@ -118,8 +118,8 @@ namespace ConfectionaryDatabaseImplement.Implements
                 DateImplement = order.DateImplement,
                 ClientId = order.ClientId,
                 ClientFIO = order.Client.FIO,
-                ImplementerId = implementerId,
-                ImplementerFIO = implementerFIO
+                ImplementerId = order.ImplementerId,
+                ImplementerFIO = order.Implementer.FIO
             };
         }
     }

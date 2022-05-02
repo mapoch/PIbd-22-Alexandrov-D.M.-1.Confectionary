@@ -127,12 +127,15 @@ namespace ConfectionaryListImplement.Implements
                 }
             }
             string implementerFIO = null;
-            foreach (Implementer implementer in source.Implementers)
+            if (order.ImplementerId.HasValue)
             {
-                if (implementer.Id == order.ImplementerId)
+                foreach (Implementer implementer in source.Implementers)
                 {
-                    implementerFIO = implementer.FIO;
-                    break;
+                    if (implementer.Id == order.ImplementerId)
+                    {
+                        implementerFIO = implementer.FIO;
+                        break;
+                    }
                 }
             }
             return new OrderViewModel { Id = order.Id,
@@ -145,6 +148,7 @@ namespace ConfectionaryListImplement.Implements
                 DateImplement = order.DateImplement,
                 ClientId = order.ClientId.Value,
                 ClientFIO = clientFIO,
+                ImplementerId = order.ImplementerId,
                 ImplementerFIO = implementerFIO
             };
         }
