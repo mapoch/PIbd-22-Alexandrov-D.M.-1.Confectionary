@@ -15,5 +15,6 @@ namespace ConfectionaryFileImplement.Models
         public DateTime DateCreate { get; set; }
         public DateTime? DateImplement { get; set; }
         public int? ClientId { get; set; }
+        public int? ImplementerId { get; set; }
     }
 }

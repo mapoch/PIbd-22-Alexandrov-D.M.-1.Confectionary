@@ -32,10 +32,12 @@ namespace ConfectionaryListImplement.Implements
             var result = new List<OrderViewModel>();
             foreach (var order in source.Orders)
             {
-                if ((!model.DateFrom.HasValue && !model.DateTo.HasValue && order.DateCreate.Date == model.DateCreate.Date) || 
-                    (model.DateFrom.HasValue && model.DateTo.HasValue &&
-                    order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo) ||
-                    (model.ClientId.HasValue && order.ClientId == model.ClientId))
+                if ((!model.DateFrom.HasValue && !model.DateTo.HasValue && order.DateCreate.Date == model.DateCreate.Date)
+                    || (model.DateFrom.HasValue && model.DateTo.HasValue &&
+                    order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo) || 
+                    (model.ClientId.HasValue && order.ClientId == model.ClientId) ||
+                    (model.ImplementerId.HasValue && order.ImplementerId == model.ImplementerId) ||
+                    (model.SearchStatus.HasValue && model.SearchStatus.Value == order.Status))
                     result.Add(CreateModel(order));
             }
             return result;
@@ -100,6 +102,7 @@ namespace ConfectionaryListImplement.Implements
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
             order.ClientId = model.ClientId;
+            order.ImplementerId = model.ImplementerId;
             return order;
         }
 
@@ -123,16 +126,30 @@ namespace ConfectionaryListImplement.Implements
                     break;
                 }
             }
+            string implementerFIO = null;
+            if (order.ImplementerId.HasValue)
+            {
+                foreach (Implementer implementer in source.Implementers)
+                {
+                    if (implementer.Id == order.ImplementerId)
+                    {
+                        implementerFIO = implementer.FIO;
+                        break;
+                    }
+                }
+            }
             return new OrderViewModel { Id = order.Id,
                 PastryId = order.PastryId,
                 PastryName = pastryName,
-                Count = order.Count, 
-                Sum = order.Sum, 
-                Status = order.Status.ToString(), 
-                DateCreate = order.DateCreate, 
+                Count = order.Count,
+                Sum = order.Sum,
+                Status = order.Status.ToString(),
+                DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
                 ClientId = order.ClientId.Value,
-                ClientFIO = clientFIO
+                ClientFIO = clientFIO,
+                ImplementerId = order.ImplementerId,
+                ImplementerFIO = implementerFIO
             };
         }
     }
