@@ -16,7 +16,6 @@ namespace ConfectionaryDatabaseImplement.Implements
         public List<OrderViewModel> GetFullList()
         {
             using var context = new ConfectionaryDatabase();
-            //foreach (var ord in context.Orders) Delete(new OrderBindingModel { Id = ord.Id});
             return context.Orders.Include(rec => rec.Pastry).Include(rec => rec.Client)
                 .Include(rec => rec.Implementer).Select(CreateModel).ToList();
         }
@@ -98,7 +97,7 @@ namespace ConfectionaryDatabaseImplement.Implements
             order.Status = model.Status;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
-            order.ClientId = model.ClientId;
+            order.ClientId = model.ClientId.Value;
             order.Client = context.Clients.FirstOrDefault(rec => rec.Id == model.ClientId);
             order.ImplementerId = model.ImplementerId;
             order.Implementer = context.Implementers.FirstOrDefault(rec => rec.Id == model.ImplementerId);
@@ -107,23 +106,6 @@ namespace ConfectionaryDatabaseImplement.Implements
 
         private static OrderViewModel CreateModel(Order order)
         {
-            int? clientId = null;
-            string clientFIO = null;
-            int? implementerId = null;
-            string implementerFIO = null;
-
-            if (order.Client != null)
-            {
-                clientId = order.ClientId;
-                clientFIO = order.Client.FIO;
-            }
-
-            if (order.Implementer != null)
-            {
-                implementerId = order.ImplementerId;
-                implementerFIO = order.Implementer.FIO;
-            }
-
             return new OrderViewModel
             {
                 Id = order.Id,
@@ -134,8 +116,8 @@ namespace ConfectionaryDatabaseImplement.Implements
                 Status = order.Status.ToString(),
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
-                ClientId = clientId,
-                ClientFIO = clientFIO,
+                ClientId = order.ClientId,
+                ClientFIO = order.Client.FIO,
                 ImplementerId = implementerId,
                 ImplementerFIO = implementerFIO
             };

@@ -10,7 +10,8 @@ namespace ConfectionaryDatabaseImplement.Migrations
                 name: "ClientId",
                 table: "Orders",
                 type: "int",
-                nullable: true);
+                nullable: false,
+                defaultValue: 0);
 
             migrationBuilder.CreateTable(
                 name: "Clients",
@@ -38,7 +39,7 @@ namespace ConfectionaryDatabaseImplement.Migrations
                 column: "ClientId",
                 principalTable: "Clients",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

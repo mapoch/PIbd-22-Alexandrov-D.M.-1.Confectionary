@@ -81,22 +81,18 @@ namespace ConfectionaryFileImplement.Implements
 
         private OrderViewModel CreateModel(Order order)
         {
-            string pastryName = source.Pastries.FirstOrDefault(rec => rec.Id == order.PastryId).PastryName;
-            string clientFIO = source.Clients.FirstOrDefault(rec => rec.Id == order.ClientId).FIO;
-            string implementerFIO = source.Implementers.FirstOrDefault(rec => rec.Id == order.ImplementerId).FIO;
-
             return new OrderViewModel
             {
                 Id = order.Id,
                 PastryId = order.PastryId,
-                PastryName = pastryName,
+                PastryName = source.Pastries.FirstOrDefault(rec => rec.Id == order.PastryId).PastryName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status.ToString(),
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
-                ClientId = order.ClientId,
-                ClientFIO = clientFIO,
+                ClientId = order.ClientId.Value,
+                ClientFIO = source.Clients.FirstOrDefault(rec => rec.Id == order.ClientId)?.FIO
                 ImplementerId = order.ImplementerId,
                 ImplementerFIO = implementerFIO
             };

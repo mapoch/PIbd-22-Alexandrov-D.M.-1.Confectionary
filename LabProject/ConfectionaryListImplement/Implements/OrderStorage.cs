@@ -143,7 +143,7 @@ namespace ConfectionaryListImplement.Implements
                 Status = order.Status.ToString(),
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
-                ClientId = order.ClientId,
+                ClientId = order.ClientId.Value,
                 ClientFIO = clientFIO,
                 ImplementerFIO = implementerFIO
             };
