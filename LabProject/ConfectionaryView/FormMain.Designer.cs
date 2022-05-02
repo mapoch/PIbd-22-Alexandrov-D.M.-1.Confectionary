@@ -38,6 +38,7 @@ namespace ConfectionaryView
             this.toolStripMenuItemLists = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemComponent = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemPastry = new System.Windows.Forms.ToolStripMenuItem();
+            this.клиентыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.отчётыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.списокИзделийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,13 +56,13 @@ namespace ConfectionaryView
             this.dataGridViewOrders.Name = "dataGridViewOrders";
             this.dataGridViewOrders.RowHeadersWidth = 51;
             this.dataGridViewOrders.RowTemplate.Height = 29;
-            this.dataGridViewOrders.Size = new System.Drawing.Size(844, 469);
+            this.dataGridViewOrders.Size = new System.Drawing.Size(1045, 469);
             this.dataGridViewOrders.TabIndex = 1;
             // 
             // buttonCreate
             // 
             this.buttonCreate.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonCreate.Location = new System.Drawing.Point(862, 40);
+            this.buttonCreate.Location = new System.Drawing.Point(1077, 40);
             this.buttonCreate.Name = "buttonCreate";
             this.buttonCreate.Size = new System.Drawing.Size(192, 45);
             this.buttonCreate.TabIndex = 2;
@@ -72,7 +73,7 @@ namespace ConfectionaryView
             // buttonTakeInWork
             // 
             this.buttonTakeInWork.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonTakeInWork.Location = new System.Drawing.Point(862, 91);
+            this.buttonTakeInWork.Location = new System.Drawing.Point(1077, 91);
             this.buttonTakeInWork.Name = "buttonTakeInWork";
             this.buttonTakeInWork.Size = new System.Drawing.Size(192, 45);
             this.buttonTakeInWork.TabIndex = 3;
@@ -83,7 +84,7 @@ namespace ConfectionaryView
             // buttonReady
             // 
             this.buttonReady.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonReady.Location = new System.Drawing.Point(862, 142);
+            this.buttonReady.Location = new System.Drawing.Point(1077, 142);
             this.buttonReady.Name = "buttonReady";
             this.buttonReady.Size = new System.Drawing.Size(192, 45);
             this.buttonReady.TabIndex = 4;
@@ -94,7 +95,7 @@ namespace ConfectionaryView
             // buttonIssue
             // 
             this.buttonIssue.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonIssue.Location = new System.Drawing.Point(862, 193);
+            this.buttonIssue.Location = new System.Drawing.Point(1077, 193);
             this.buttonIssue.Name = "buttonIssue";
             this.buttonIssue.Size = new System.Drawing.Size(192, 45);
             this.buttonIssue.TabIndex = 5;
@@ -105,7 +106,7 @@ namespace ConfectionaryView
             // buttonRefresh
             // 
             this.buttonRefresh.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonRefresh.Location = new System.Drawing.Point(862, 455);
+            this.buttonRefresh.Location = new System.Drawing.Point(1077, 455);
             this.buttonRefresh.Name = "buttonRefresh";
             this.buttonRefresh.Size = new System.Drawing.Size(192, 45);
             this.buttonRefresh.TabIndex = 6;
@@ -117,7 +118,8 @@ namespace ConfectionaryView
             // 
             this.toolStripMenuItemLists.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemComponent,
-            this.toolStripMenuItemPastry});
+            this.toolStripMenuItemPastry,
+            this.клиентыToolStripMenuItem});
             this.toolStripMenuItemLists.Name = "toolStripMenuItemLists";
             this.toolStripMenuItemLists.Size = new System.Drawing.Size(117, 24);
             this.toolStripMenuItemLists.Text = "Справочники";
@@ -136,6 +138,13 @@ namespace ConfectionaryView
             this.toolStripMenuItemPastry.Text = "Изделия";
             this.toolStripMenuItemPastry.Click += new System.EventHandler(this.toolStripMenuItemPastry_Click);
             // 
+            // клиентыToolStripMenuItem
+            // 
+            this.клиентыToolStripMenuItem.Name = "клиентыToolStripMenuItem";
+            this.клиентыToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+            this.клиентыToolStripMenuItem.Text = "Клиенты";
+            this.клиентыToolStripMenuItem.Click += new System.EventHandler(this.клиентыToolStripMenuItem_Click);
+            // 
             // menuStrip
             // 
             this.menuStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
@@ -145,7 +154,7 @@ namespace ConfectionaryView
             this.отчётыToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(1066, 28);
+            this.menuStrip.Size = new System.Drawing.Size(1281, 28);
             this.menuStrip.TabIndex = 0;
             // 
             // отчётыToolStripMenuItem
@@ -183,7 +192,7 @@ namespace ConfectionaryView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1066, 512);
+            this.ClientSize = new System.Drawing.Size(1281, 512);
             this.Controls.Add(this.buttonRefresh);
             this.Controls.Add(this.buttonIssue);
             this.Controls.Add(this.buttonReady);
@@ -218,6 +227,7 @@ namespace ConfectionaryView
         private System.Windows.Forms.ToolStripMenuItem списокИзделийToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem компонентыПоИзделиямToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem списокЗаказовToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem клиентыToolStripMenuItem;
     }
 }
 

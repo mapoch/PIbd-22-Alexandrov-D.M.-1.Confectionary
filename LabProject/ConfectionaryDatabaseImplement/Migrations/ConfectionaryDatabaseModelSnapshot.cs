@@ -19,6 +19,30 @@ namespace ConfectionaryDatabaseImplement.Migrations
                 .HasAnnotation("ProductVersion", "5.0.14")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("ConfectionaryDatabaseImplement.Models.Client", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FIO")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Clients");
+                });
+
             modelBuilder.Entity("ConfectionaryDatabaseImplement.Models.Component", b =>
                 {
                     b.Property<int>("Id")
@@ -42,6 +66,9 @@ namespace ConfectionaryDatabaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Count")
                         .HasColumnType("int");
 
@@ -61,6 +88,8 @@ namespace ConfectionaryDatabaseImplement.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
 
                     b.HasIndex("PastryId");
 
@@ -113,11 +142,19 @@ namespace ConfectionaryDatabaseImplement.Migrations
 
             modelBuilder.Entity("ConfectionaryDatabaseImplement.Models.Order", b =>
                 {
+                    b.HasOne("ConfectionaryDatabaseImplement.Models.Client", "Client")
+                        .WithMany("Orders")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ConfectionaryDatabaseImplement.Models.Pastry", "Pastry")
                         .WithMany("Orders")
                         .HasForeignKey("PastryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Client");
 
                     b.Navigation("Pastry");
                 });
@@ -139,6 +176,11 @@ namespace ConfectionaryDatabaseImplement.Migrations
                     b.Navigation("Component");
 
                     b.Navigation("Pastry");
+                });
+
+            modelBuilder.Entity("ConfectionaryDatabaseImplement.Models.Client", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("ConfectionaryDatabaseImplement.Models.Component", b =>

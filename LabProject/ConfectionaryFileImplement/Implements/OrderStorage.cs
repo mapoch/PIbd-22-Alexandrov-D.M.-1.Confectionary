@@ -27,9 +27,11 @@ namespace ConfectionaryFileImplement.Implements
         {
             if (model == null) return null;
 
-            return source.Orders.Where(rec => (model.Id.HasValue && rec.Id.Equals(model.Id)) ||
-            (model.DateFrom.HasValue && model.DateTo.HasValue &&
-                    rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo))
+            return source.Orders.Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue
+                && rec.DateCreate.Date == model.DateCreate.Date) ||
+                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date
+                && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
+                (model.ClientId.HasValue && rec.ClientId == model.ClientId))
                 .Select(CreateModel).ToList();
         }
 
@@ -70,23 +72,24 @@ namespace ConfectionaryFileImplement.Implements
             order.Status = model.Status;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
+            order.ClientId = model.ClientId;
             return order;
         }
 
         private OrderViewModel CreateModel(Order order)
         {
-            string pastryName = source.Pastries.FirstOrDefault(rec => rec.Id == order.PastryId).PastryName;
-
             return new OrderViewModel
             {
                 Id = order.Id,
                 PastryId = order.PastryId,
-                PastryName = pastryName,
+                PastryName = source.Pastries.FirstOrDefault(rec => rec.Id == order.PastryId).PastryName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status.ToString(),
                 DateCreate = order.DateCreate,
-                DateImplement = order.DateImplement
+                DateImplement = order.DateImplement,
+                ClientId = order.ClientId.Value,
+                ClientFIO = source.Clients.FirstOrDefault(rec => rec.Id == order.ClientId)?.FIO
             };
         }
     }

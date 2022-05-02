@@ -46,8 +46,7 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
                 };
                 foreach (var component in pastry.PastryComponents)
                 {
-                    record.Components.Add(new Tuple<string, int>(component.Value.Item1, 
-                        component.Value.Item2));
+                    record.Components.Add(new Tuple<string, int>(component.Value.Item1, component.Value.Item2));
                     record.TotalCount += component.Value.Item2;
                 }
                 list.Add(record);
