@@ -6,16 +6,21 @@ using ConfectionaryContracts.BusinessLogicContracts;
 using ConfectionaryContracts.StoragesContracts;
 using ConfectionaryContracts.ViewModels;
 using ConfectionaryContracts.Enums;
+using ConfectionaryBusinessLogic.MailWorker;
 
 namespace ConfectionaryBusinessLogic.BusinessLogics
 {
     public class OrderLogic : IOrderLogic
     {
         private readonly IOrderStorage orderStorage;
+        private readonly IClientStorage clientStorage;
+        private readonly AbstractMailWorker abstractMailWorker;
 
-        public OrderLogic(IOrderStorage _orderStorage)
+        public OrderLogic(IOrderStorage _orderStorage, IClientStorage _clientStorage, AbstractMailWorker _abstractMailWorker)
         {
             orderStorage = _orderStorage;
+            clientStorage = _clientStorage;
+            abstractMailWorker = _abstractMailWorker;
         }
 
         public List<OrderViewModel> Read(OrderBindingModel model)
@@ -38,6 +43,16 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
                 DateCreate = DateTime.Now, ClientId = model.ClientId };
 
             orderStorage.Insert(order);
+
+            abstractMailWorker.MailSendAsync(new MailSendInfoBindingModel
+            {
+                MailAddress = clientStorage.GetElement(new ClientBindingModel
+                {
+                    Id = model.ClientId
+                })?.Login,
+                Subject = $"Создан новый заказ",
+                Text = $"Заказ от {DateTime.Now} на сумму {model.Sum:N2} принят."
+            });
         }
 
         public void TakeOrderInWork(ChangeStatusBindingModel model)
@@ -52,6 +67,16 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
                 Count = element.Count, Sum = element.Sum, DateCreate = element.DateCreate, DateImplement = DateTime.Now, ClientId = element.ClientId,
                 ImplementerId = model.ImplementerId
             });
+
+            abstractMailWorker.MailSendAsync(new MailSendInfoBindingModel
+            {
+                MailAddress = clientStorage.GetElement(new ClientBindingModel
+                {
+                    Id = element.ClientId
+                })?.Login,
+                Subject = $"Заказ №{element.Id}",
+                Text = $"Заказ №{element.Id} передан в работу."
+            });
         }
 
         public void FinishOrder(ChangeStatusBindingModel model)
@@ -65,6 +90,16 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
             orderStorage.Update(new OrderBindingModel { Id = model.OrderId, Status = OrderStatus.Готов, DateImplement = element.DateImplement,
                 PastryId = element.PastryId, Count = element.Count, Sum = element.Sum, DateCreate = element.DateCreate, ClientId = element.ClientId,
                 ImplementerId = element.ImplementerId});
+
+            abstractMailWorker.MailSendAsync(new MailSendInfoBindingModel
+            {
+                MailAddress = clientStorage.GetElement(new ClientBindingModel
+                {
+                    Id = element.ClientId
+                })?.Login,
+                Subject = $"Заказ №{element.Id}",
+                Text = $"Заказ №{element.Id} выполнен."
+            });
         }
 
         public void DeliveryOrder(ChangeStatusBindingModel model)
@@ -78,6 +113,16 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
             orderStorage.Update(new OrderBindingModel { Id = model.OrderId, Status = OrderStatus.Выдан, DateImplement = element.DateImplement,
                 PastryId = element.PastryId, Count = element.Count, Sum = element.Sum, DateCreate = element.DateCreate, ClientId = element.ClientId,
                 ImplementerId = element.ImplementerId});
+
+            abstractMailWorker.MailSendAsync(new MailSendInfoBindingModel
+            {
+                MailAddress = clientStorage.GetElement(new ClientBindingModel
+                {
+                    Id = element.ClientId
+                })?.Login,
+                Subject = $"Заказ №{element.Id}",
+                Text = $"Заказ №{element.Id} выдан."
+            });
         }
     }
 }

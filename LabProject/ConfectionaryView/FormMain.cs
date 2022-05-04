@@ -138,5 +138,11 @@ namespace ConfectionaryView
             workProcess.DoWork(implementerLogic, orderLogic);
             LoadData();
         }
+
+        private void сообщенияToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormMessageInfos>();
+            form.ShowDialog();
+        }
     }
 }

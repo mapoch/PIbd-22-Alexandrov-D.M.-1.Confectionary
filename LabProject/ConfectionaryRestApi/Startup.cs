@@ -12,8 +12,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using ConfectionaryBusinessLogic.BusinessLogics;
+using ConfectionaryBusinessLogic.MailWorker;
 using ConfectionaryContracts.BusinessLogicContracts;
 using ConfectionaryContracts.StoragesContracts;
+using ConfectionaryContracts.BindingModels;
 using ConfectionaryDatabaseImplement.Implements;
 
 namespace ConfectionaryRestApi
@@ -33,10 +35,14 @@ namespace ConfectionaryRestApi
             services.AddTransient<IClientStorage, ClientStorage>();
             services.AddTransient<IOrderStorage, OrderStorage>();
             services.AddTransient<IPastryStorage, PastryStorage>();
+            services.AddTransient<IMessageInfoStorage, MessageInfoStorage>();
 
             services.AddTransient<IClientLogic, ClientLogic>();
             services.AddTransient<IOrderLogic, OrderLogic>();
             services.AddTransient<IPastryLogic, PastryLogic>();
+            services.AddTransient<IMessageInfoLogic, MessageInfoLogic>();
+
+            services.AddSingleton<AbstractMailWorker, MailKitWorker>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -52,18 +58,26 @@ namespace ConfectionaryRestApi
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ConfectionaryRestApi v1"));
+                app.UseSwaggerUI(c =>
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AbstractShopRestApi v1"));
             }
-
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            var mailSender = app.ApplicationServices.GetService<AbstractMailWorker>();
+            mailSender.MailConfig(new MailConfigBindingModel
+            {
+                MailLogin = Configuration?.GetSection("MailLogin")?.Value.ToString(),
+                MailPassword = Configuration?.GetSection("MailPassword")?.Value.ToString(),
+                SmtpClientHost = Configuration?.GetSection("SmtpClientHost")?.Value.ToString(),
+                SmtpClientPort = Convert.ToInt32(Configuration?.GetSection("SmtpClientPort")?.Value.ToString()),
+                PopHost = Configuration?.GetSection("PopHost")?.Value.ToString(),
+                PopPort = Convert.ToInt32(Configuration?.GetSection("PopPort")?.Value.ToString())
             });
         }
     }

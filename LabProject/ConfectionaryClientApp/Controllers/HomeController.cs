@@ -153,5 +153,14 @@ namespace ConfectionaryClientApp.Controllers
             APIClient.GetRequest<PastryViewModel>($"api/main/getpastry?pastryId={pastry}");
             return count * pastr.Price;
         }
+
+        public IActionResult Messages()
+        {
+            if (Program.Client == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            return View(APIClient.GetRequest<List<MessageInfoViewModel>>($"api/client/getmessageinfos?clientId={Program.Client.Id}"));
+        }
     }
 }
