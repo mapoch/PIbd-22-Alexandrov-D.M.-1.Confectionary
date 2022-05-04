@@ -23,5 +23,8 @@ namespace ConfectionaryDatabaseImplement.Models
 
         [ForeignKey("ClientId")]
         public virtual List<Order> Orders { get; set; }
+
+        [ForeignKey("ClientId")]
+        public virtual List<MessageInfo> MessageInfos { get; set; }
     }
 }

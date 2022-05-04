@@ -14,26 +14,32 @@ namespace ConfectionaryRestApi.Controllers
     [Route("api/[controller]/[action]")]
     public class ClientController : ControllerBase
     {
-        private readonly IClientLogic logic;
+        private readonly IClientLogic logicC;
+        private readonly IMessageInfoLogic logicMI;
 
-        private readonly ILogger<MainController> _logger;
+        private readonly ILogger<MainController> logger;
 
-        public ClientController(IClientLogic _logic)
+        public ClientController(IClientLogic _logicC, IMessageInfoLogic _logicMI)
         {
-            logic = _logic;
+            logicC = _logicC;
+            logicMI = _logicMI;
         }
 
         [HttpGet]
         public ClientViewModel Login(string login, string password)
         {
-            var list = logic.Read(new ClientBindingModel { Login = login, Password = password });
+            var list = logicC.Read(new ClientBindingModel { Login = login, Password = password });
             return (list != null && list.Count > 0) ? list[0] : null;
         }
 
-        [HttpPost]
-        public void Register(ClientBindingModel model) => logic.CreateOrUpdate(model);
+        [HttpGet]
+        public List<MessageInfoViewModel> GetMessageInfos(int clientId) => 
+            logicMI.Read(new MessageInfoBindingModel { ClientId = clientId });
 
         [HttpPost]
-        public void UpdateData(ClientBindingModel model) => logic.CreateOrUpdate(model);
+        public void Register(ClientBindingModel model) => logicC.CreateOrUpdate(model);
+
+        [HttpPost]
+        public void UpdateData(ClientBindingModel model) => logicC.CreateOrUpdate(model);
     }
 }

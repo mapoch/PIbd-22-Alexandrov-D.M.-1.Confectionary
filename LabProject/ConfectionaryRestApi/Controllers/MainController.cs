@@ -17,7 +17,7 @@ namespace ConfectionaryRestApi.Controllers
         private readonly IOrderLogic order;
         private readonly IPastryLogic pastry;
 
-        private readonly ILogger<MainController> _logger;
+        private readonly ILogger<MainController> logger;
 
         public MainController(IOrderLogic _order, IPastryLogic _pastry)
         {
