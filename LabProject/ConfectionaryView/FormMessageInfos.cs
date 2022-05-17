@@ -31,13 +31,7 @@ namespace ConfectionaryView
         {
             try
             {
-                var list = logic.Read(null);
-                if (list != null)
-                {
-                    dataGridViewMessages.DataSource = list;
-                    dataGridViewMessages.Columns[0].Visible = false;
-                    dataGridViewMessages.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                }
+                Program.ConfigGrid(logic.Read(null), dataGridViewMessages);
             }
             catch (Exception ex)
             {

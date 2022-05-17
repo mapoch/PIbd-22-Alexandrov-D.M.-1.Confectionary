@@ -30,14 +30,7 @@ namespace ConfectionaryView
         {
             try
             {
-                var list = logic.Read(null);
-                if (list != null)
-                {
-                    dataGridViewPastries.DataSource = list;
-                    dataGridViewPastries.Columns[0].Visible = false;
-                    dataGridViewPastries.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                    dataGridViewPastries.Columns[3].Visible = false;
-                }
+                Program.ConfigGrid(logic.Read(null), dataGridViewPastries);
             }
             catch (Exception ex)
             {

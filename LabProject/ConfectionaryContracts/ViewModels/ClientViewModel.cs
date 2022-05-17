@@ -4,20 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Runtime.Serialization;
+using ConfectionaryContracts.Attributes;
 
 namespace ConfectionaryContracts.ViewModels
 {
     public class ClientViewModel
     {
+        [Column(title: "Номер", width: 100)]
         public int? Id { get; set; }
 
-        [DisplayName("Имя")]
+        [Column(title: "Имя", gridViewAutoSize: GridViewAutoSize.Fill)]
         public string FIO { get; set; }
 
-        [DisplayName("Логин")]
+        [Column(title: "Логин", width: 150)]
         public string Login { get; set; }
 
-        [DisplayName("Пароль")]
+        [Column(title: "Пароль", width: 150)]
         public string Password { get; set; }
     }
 }
