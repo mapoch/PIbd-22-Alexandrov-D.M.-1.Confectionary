@@ -7,10 +7,8 @@ using ConfectionaryContracts.ViewModels;
 
 namespace ConfectionaryBusinessLogic.OfficePackage.HelperModels
 {
-    public class ExcelInfo
+    public class ExcelInfoWarehouseComponent : ExcelInfoAbstract
     {
-        public string FileName { get; set; }
-        public string Title { get; set; }
-        public List<ReportPastryComponentViewModel> PastryComponents { get; set; }
+        public List<ReportWarehouseComponentViewModel> WarehouseComponents { get; set; }
     }
 }

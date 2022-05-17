@@ -34,7 +34,7 @@ namespace ConfectionaryBusinessLogic.OfficePackage.Implements
             style = document.Styles.AddStyle("NormalTitle", "Normal");
             style.Font.Bold = true;
         }
-        protected override void CreatePdf(PdfInfo info)
+        protected override void CreatePdf(PdfInfoAbstract info)
         {
             document = new Document();
             DefineStyles(document);
@@ -77,7 +77,7 @@ namespace ConfectionaryBusinessLogic.OfficePackage.Implements
             }
         }
 
-        protected override void SavePdf(PdfInfo info)
+        protected override void SavePdf(PdfInfoAbstract info)
         {
             var renderer = new PdfDocumentRenderer(true)
             {

@@ -10,7 +10,7 @@ namespace ConfectionaryBusinessLogic.OfficePackage
 {
     public abstract class AbstractSaveToPdf
     {
-        public void CreateDoc(PdfInfo info)
+        public void CreateDoc(PdfInfoOrders info)
         {
             CreatePdf(info);
             CreateParagraph(new PdfParagraph { Text = info.Title, Style = "NormalTitle" });
@@ -33,10 +33,40 @@ namespace ConfectionaryBusinessLogic.OfficePackage
                 });
             }
             SavePdf(info);
+        }
+
+        public void CreateDoc(PdfInfoDates info)
+        {
+            CreatePdf(info);
+            CreateParagraph(new PdfParagraph { Text = info.Title, Style = "NormalTitle" });
+            CreateParagraph(new PdfParagraph
+            {
+                Text = $"с{ info.DateFrom.ToShortDateString() } " +
+                $"по { info.DateTo.ToShortDateString() }",
+                Style = "Normal"
+            });
+            CreateTable(new List<string> { "3cm", "6cm", "3cm", "2cm", "3cm" });
+            CreateRow(new PdfRowParameters
+            {
+                Texts = new List<string>
+                { "Дата", "Количество", "Сумма" },
+                Style = "NormalTitle",
+                ParagraphAlignment = PdfParagraphAlignmentType.Center
+            });
+            foreach (var date in info.Dates)
+            {
+                CreateRow(new PdfRowParameters
+                {
+                    Texts = new List<string> { date.Date.ToShortDateString(), date.Count.ToString(), date.Sum.ToString() },
+                    Style = "Normal",
+                    ParagraphAlignment = PdfParagraphAlignmentType.Left
+                });
+            }
+            SavePdf(info);
 
         }
 
-        protected abstract void CreatePdf(PdfInfo info);
+        protected abstract void CreatePdf(PdfInfoAbstract info);
 
         protected abstract void CreateParagraph(PdfParagraph paragraph);
 
@@ -44,6 +74,6 @@ namespace ConfectionaryBusinessLogic.OfficePackage
 
         protected abstract void CreateRow(PdfRowParameters rowParameters);
 
-        protected abstract void SavePdf(PdfInfo info);
+        protected abstract void SavePdf(PdfInfoAbstract info);
     }
 }

@@ -11,10 +11,14 @@ namespace ConfectionaryContracts.BusinessLogicContracts
     public interface IReportLogic
     {
         List<ReportPastryComponentViewModel> GetPastryComponent();
+        List<ReportWarehouseComponentViewModel> GetWarehouseComponent();
         List<ReportOrdersViewModel> GetOrders(ReportBindingModel model);
+        List<ReportDateViewModel> GetDates(ReportBindingModel model);
         void SavePastriesToWordFile(ReportBindingModel model);
         void SaveWarehousesToWordFile(ReportBindingModel model);
         void SavePastryComponentToExcelFile(ReportBindingModel model);
+        void SaveWarehouseComponentToExcelFile(ReportBindingModel model);
         void SaveOrdersToPdfFile(ReportBindingModel model);
+        void SaveDatesToPdfFile(ReportBindingModel model);
     }
 }

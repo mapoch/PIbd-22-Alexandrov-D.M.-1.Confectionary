@@ -155,7 +155,7 @@ namespace ConfectionaryBusinessLogic.OfficePackage.Implements
             };
         }
 
-        protected override void CreateExcel(ExcelInfo info)
+        protected override void CreateExcel(ExcelInfoAbstract info)
         {
             spreadsheetDocument = SpreadsheetDocument.Create(info.FileName, SpreadsheetDocumentType.Workbook);
 
@@ -261,7 +261,7 @@ namespace ConfectionaryBusinessLogic.OfficePackage.Implements
             mergeCells.Append(mergeCell);
         }
 
-        protected override void SaveExcel(ExcelInfo info)
+        protected override void SaveExcel(ExcelInfoAbstract info)
         {
             spreadsheetDocument.WorkbookPart.Workbook.Save();
             spreadsheetDocument.Close();
