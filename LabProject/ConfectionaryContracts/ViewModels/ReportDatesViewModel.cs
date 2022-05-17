@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConfectionaryContracts.ViewModels
 {
-    public class ReportDateViewModel
+    public class ReportDatesViewModel
     {
         public DateTime Date { get; set; }
         public int Count { get; set; }

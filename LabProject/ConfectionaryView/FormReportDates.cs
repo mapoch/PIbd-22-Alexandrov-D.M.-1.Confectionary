@@ -14,17 +14,17 @@ using Microsoft.Reporting.WinForms;
 
 namespace ConfectionaryView
 {
-    public partial class FormReportOrders : Form
+    public partial class FormReportDates : Form
     {
         private readonly ReportViewer reportViewer;
         private readonly IReportLogic logic;
 
-        public FormReportOrders(IReportLogic _logic)
+        public FormReportDates(IReportLogic _logic)
         {
             InitializeComponent();
             logic = _logic;
             reportViewer = new ReportViewer { Dock = DockStyle.Fill };
-            reportViewer.LocalReport.LoadReportDefinition(new FileStream("ReportOrders.rdlc", FileMode.Open));
+            reportViewer.LocalReport.LoadReportDefinition(new FileStream("ReportDates.rdlc", FileMode.Open));
             Controls.Clear();
             Controls.Add(panel);
             panelData.Controls.Add(reportViewer);
@@ -33,26 +33,12 @@ namespace ConfectionaryView
 
         private void buttonMake_Click(object sender, EventArgs e)
         {
-            if (dateTimePickerFrom.Value.Date >= dateTimePickerTo.Value.Date)
-            {
-                MessageBox.Show("Дата начала должна быть меньше даты окончания", 
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
             try
             {
-                var dataSource = logic.GetOrders(new ReportBindingModel
-                {
-                    DateFrom = dateTimePickerFrom.Value,
-                    DateTo = dateTimePickerTo.Value
-                });
-                var source = new ReportDataSource("DataSetOrders", dataSource);
+                var dataSource = logic.GetDates(new ReportBindingModel());
+                var source = new ReportDataSource("DataSetDates", dataSource);
                 reportViewer.LocalReport.DataSources.Clear();
                 reportViewer.LocalReport.DataSources.Add(source);
-                var parameters = new[] { new ReportParameter("ReportParameterPeriod", 
-                    "c " + dateTimePickerFrom.Value.ToShortDateString() + 
-                    " по " + dateTimePickerTo.Value.ToShortDateString()) };
-                reportViewer.LocalReport.SetParameters(parameters);
                 reportViewer.RefreshReport();
             }
             catch (Exception ex)
@@ -63,22 +49,14 @@ namespace ConfectionaryView
 
         private void buttonToPdf_Click(object sender, EventArgs e)
         {
-            if (dateTimePickerFrom.Value.Date >= dateTimePickerTo.Value.Date)
-            {
-                MessageBox.Show("Дата начала должна быть меньше даты окончания",
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
             using var dialog = new SaveFileDialog { Filter = "pdf|*.pdf" };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    logic.SaveOrdersToPdfFile(new ReportBindingModel
+                    logic.SaveDatesToPdfFile(new ReportBindingModel
                     {
-                        FileName = dialog.FileName,
-                        DateFrom = dateTimePickerFrom.Value,
-                        DateTo = dateTimePickerTo.Value
+                        FileName = dialog.FileName
                     });
                     MessageBox.Show("Выполнено", "Успех",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);

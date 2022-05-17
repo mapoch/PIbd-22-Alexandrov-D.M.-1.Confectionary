@@ -173,5 +173,10 @@ namespace ConfectionaryView
                 MessageBoxIcon.Information);
             }
         }
+
+        private void списокЗаказовПоДатамToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

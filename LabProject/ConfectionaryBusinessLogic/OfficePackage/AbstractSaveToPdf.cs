@@ -39,12 +39,6 @@ namespace ConfectionaryBusinessLogic.OfficePackage
         {
             CreatePdf(info);
             CreateParagraph(new PdfParagraph { Text = info.Title, Style = "NormalTitle" });
-            CreateParagraph(new PdfParagraph
-            {
-                Text = $"с{ info.DateFrom.ToShortDateString() } " +
-                $"по { info.DateTo.ToShortDateString() }",
-                Style = "Normal"
-            });
             CreateTable(new List<string> { "3cm", "6cm", "3cm", "2cm", "3cm" });
             CreateRow(new PdfRowParameters
             {

@@ -89,20 +89,19 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
            .ToList();
         }
 
-        public List<ReportDateViewModel> GetDates(ReportBindingModel model)
+        public List<ReportDatesViewModel> GetDates(ReportBindingModel model)
         {
-            var sourceList = orderStorage.GetFilteredList(new OrderBindingModel
-            { DateFrom = model.DateFrom, DateTo = model.DateTo }).Select(x => new ReportOrdersViewModel
+            var sourceList = orderStorage.GetFullList().Select(x => new ReportOrdersViewModel
             { DateCreate = x.DateCreate, Sum = x.Sum })
            .ToList();
 
-            List<ReportDateViewModel> list = new List<ReportDateViewModel>();
+            List<ReportDatesViewModel> list = new List<ReportDatesViewModel>();
             foreach (var order in sourceList)
             {
                 var element = list.FirstOrDefault(rec => rec.Date == order.DateCreate);
                 if (element == null)
                 {
-                    list.Add(new ReportDateViewModel 
+                    list.Add(new ReportDatesViewModel 
                     { 
                         Date = order.DateCreate,
                         Count = 1,
@@ -176,8 +175,6 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
             {
                 FileName = model.FileName,
                 Title = "Список дат",
-                DateFrom = model.DateFrom.Value,
-                DateTo = model.DateTo.Value,
                 Dates = GetDates(model)
             });
         }

@@ -9,6 +9,8 @@ namespace ConfectionaryBusinessLogic.OfficePackage.HelperModels
 {
     public class PdfInfoOrders : PdfInfoAbstract
     {
+        public DateTime DateFrom { get; set; }
+        public DateTime DateTo { get; set; }
         public List<ReportOrdersViewModel> Orders { get; set; }
     }
 }
