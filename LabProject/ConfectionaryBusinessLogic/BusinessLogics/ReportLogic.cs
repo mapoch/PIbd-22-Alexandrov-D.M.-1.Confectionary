@@ -58,19 +58,59 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
             return list;
         }
 
+        public List<ReportComponentPastryViewModel> GetComponentPastry()
+        {
+            var pastries = pastryStorage.GetFullList();
+            var list = new List<ReportComponentPastryViewModel>();
+            foreach (var pastry in pastries)
+            {
+                foreach (var component in pastry.PastryComponents)
+                {
+                    ReportComponentPastryViewModel record = list.Find(rec => rec.ComponentName == component.Value.Item1);
+                    if (record != null)
+                    {
+                        Tuple<string, int> storedP = record.Pastries.Find(rec => rec.Item1 == pastry.PastryName);
+                        if (storedP != null)
+                        {
+                            record.Pastries.Remove(storedP);
+                            record.Pastries.Add(new Tuple<string, int>(storedP.Item1, storedP.Item2 + component.Value.Item2));
+                            record.TotalCount += component.Value.Item2;
+                        }
+                        else
+                        {
+                            record.Pastries.Add(new Tuple<string, int>(pastry.PastryName, component.Value.Item2));
+                            record.TotalCount += component.Value.Item2;
+                        }
+                    }
+                    else
+                    {
+                        List<Tuple<string, int>> pastriesList = new List<Tuple<string, int>>();
+                        pastriesList.Add(new Tuple<string, int>(pastry.PastryName, component.Value.Item2));
+                        list.Add(new ReportComponentPastryViewModel
+                        {
+                            ComponentName = component.Value.Item1,
+                            TotalCount = component.Value.Item2,
+                            Pastries = pastriesList
+                        });
+                    }
+                }
+            }
+            return list;
+        }
+
         public List<ReportWarehouseComponentViewModel> GetWarehouseComponent()
         {
-            var warehouses = pastryStorage.GetFullList();
+            var warehouses = warehouseStorage.GetFullList();
             var list = new List<ReportWarehouseComponentViewModel>();
             foreach (var warehouse in warehouses)
             {
                 var record = new ReportWarehouseComponentViewModel
                 {
-                    WarehouseName = warehouse.PastryName,
+                    WarehouseName = warehouse.Name,
                     Components = new List<Tuple<string, int>>(),
                     TotalCount = 0
                 };
-                foreach (var component in warehouse.PastryComponents)
+                foreach (var component in warehouse.StoredComponents)
                 {
                     record.Components.Add(new Tuple<string, int>(component.Value.Item1,
                         component.Value.Item2));
@@ -98,7 +138,7 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
             List<ReportDatesViewModel> list = new List<ReportDatesViewModel>();
             foreach (var order in sourceList)
             {
-                var element = list.FirstOrDefault(rec => rec.Date == order.DateCreate);
+                var element = list.FirstOrDefault(rec => rec.Date.Date == order.DateCreate.Date);
                 if (element == null)
                 {
                     list.Add(new ReportDatesViewModel 

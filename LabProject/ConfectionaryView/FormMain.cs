@@ -176,7 +176,20 @@ namespace ConfectionaryView
 
         private void списокЗаказовПоДатамToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var form = Program.Container.Resolve<FormReportDates>();
+            form.ShowDialog();
+        }
 
+        private void заполненностьСкладовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormReportWarehouses>();
+            form.ShowDialog();
+        }
+
+        private void изделияПоКомпонентамToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormReportComponentPastry>();
+            form.ShowDialog();
         }
     }
 }

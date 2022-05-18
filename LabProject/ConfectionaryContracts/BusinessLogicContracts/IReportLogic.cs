@@ -11,6 +11,7 @@ namespace ConfectionaryContracts.BusinessLogicContracts
     public interface IReportLogic
     {
         List<ReportPastryComponentViewModel> GetPastryComponent();
+        public List<ReportComponentPastryViewModel> GetComponentPastry();
         List<ReportWarehouseComponentViewModel> GetWarehouseComponent();
         List<ReportOrdersViewModel> GetOrders(ReportBindingModel model);
         List<ReportDatesViewModel> GetDates(ReportBindingModel model);

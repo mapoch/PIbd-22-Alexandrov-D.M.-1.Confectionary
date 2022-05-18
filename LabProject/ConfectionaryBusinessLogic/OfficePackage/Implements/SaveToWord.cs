@@ -111,7 +111,7 @@ namespace ConfectionaryBusinessLogic.OfficePackage.Implements
                 docTable.AppendChild(tableProps);
 
                 TableGrid tableGrid = new TableGrid();
-                for (int j = 0; j < table.Texts.Count; ++j)
+                for (int j = 0; j < table.Columns.Count; ++j)
                 {
                     tableGrid.AppendChild(new GridColumn() { Width = "3413" });
                 }
@@ -135,7 +135,7 @@ namespace ConfectionaryBusinessLogic.OfficePackage.Implements
                     runProps.AppendChild(new Bold());
 
                     docRun.AppendChild(runProps);
-                    docRun.AppendChild(new Text { Text = table.Texts[0].GetValue(j).ToString(), Space = SpaceProcessingModeValues.Preserve });
+                    docRun.AppendChild(new Text { Text = table.Columns[j].ToString(), Space = SpaceProcessingModeValues.Preserve });
                     docParagraph.AppendChild(docRun);
 
                     TableCell docCell = new TableCell();
@@ -144,7 +144,7 @@ namespace ConfectionaryBusinessLogic.OfficePackage.Implements
                 }
                 docTable.AppendChild(clmns);
 
-                for (int i = 1; i < table.Texts.Count; ++i)
+                for (int i = 0; i < table.Texts.Count; ++i)
                 {
                     TableRow docRow = new TableRow();
 
@@ -173,6 +173,8 @@ namespace ConfectionaryBusinessLogic.OfficePackage.Implements
                     }
                     docTable.AppendChild(docRow);
                 }
+
+                docBody.AppendChild(docTable);
             }
         }
 
