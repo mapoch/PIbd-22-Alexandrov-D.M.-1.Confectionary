@@ -42,6 +42,7 @@ namespace ConfectionaryView
             try
             {
                 Program.ConfigGrid(orderLogic.Read(null), dataGridViewOrders);
+                dataGridViewOrders.Columns[0].Visible = false;
             }
             catch (Exception ex)
             {
@@ -150,6 +151,7 @@ namespace ConfectionaryView
                     var fbd = new FolderBrowserDialog();
                     if (fbd.ShowDialog() == DialogResult.OK)
                     {
+                        if (fbd.SelectedPath.Contains("C://")) throw new Exception("Запрещено");
                         backUpLogic.CreateBackUp(new BackUpSaveBinidngModel { FolderName = fbd.SelectedPath });
                         MessageBox.Show("Бекап создан", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }

@@ -33,6 +33,7 @@ namespace ConfectionaryView
             try
             {
                 Program.ConfigGrid(logic.Read(null), dataGridViewClients);
+                dataGridViewClients.Columns[0].Visible = false;
             }
             catch (Exception ex)
             {

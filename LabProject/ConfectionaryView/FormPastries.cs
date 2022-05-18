@@ -31,6 +31,7 @@ namespace ConfectionaryView
             try
             {
                 Program.ConfigGrid(logic.Read(null), dataGridViewPastries);
+                dataGridViewPastries.Columns[0].Visible = false;
             }
             catch (Exception ex)
             {

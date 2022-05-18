@@ -43,7 +43,7 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
                 }
                 Assembly assem = backUpInfo.GetAssembly();
                 var dbsets = backUpInfo.GetFullList();
-                MethodInfo method = GetType().BaseType.GetTypeInfo().GetDeclaredMethod("SaveToFile");
+                MethodInfo method = GetType().GetTypeInfo().GetDeclaredMethod("SaveToFile");
                 foreach (var set in dbsets)
                 {
                     var elem = assem.CreateInstance(set.PropertyType.GenericTypeArguments[0].FullName);
