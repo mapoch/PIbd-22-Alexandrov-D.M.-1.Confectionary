@@ -26,15 +26,17 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
         {
             orderLogic = _orderLogic;
             var implementers = implementerLogic.Read(null);
-            ConcurrentBag<OrderViewModel> orders = new(orderLogic.Read(new OrderBindingModel
+            ConcurrentBag<OrderViewModel> ordersNew = new(orderLogic.Read(new OrderBindingModel
             { SearchStatus = OrderStatus.Принят }));
+            ConcurrentBag<OrderViewModel> ordersOld = new(orderLogic.Read(new OrderBindingModel
+            { SearchStatus = OrderStatus.Требуются_материалы }));
             foreach (var implementer in implementers)
             {
-                Task.Run(async () => await WorkerWorkAsync(implementer, orders));
+                Task.Run(async () => await WorkerWorkAsync(implementer, ordersNew, ordersOld));
             }
         }
 
-        private async Task WorkerWorkAsync(ImplementerViewModel implementer, ConcurrentBag<OrderViewModel> orders)
+        private async Task WorkerWorkAsync(ImplementerViewModel implementer, ConcurrentBag<OrderViewModel> ordersNew, ConcurrentBag<OrderViewModel> ordersOld)
         {
             var runOrders = await Task.Run(() => orderLogic.Read(new OrderBindingModel
             {
@@ -53,17 +55,32 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
             }
             await Task.Run(() =>
             {
-                while (!orders.IsEmpty)
+                while (!ordersOld.IsEmpty)
                 {
-                    if (orders.TryTake(out OrderViewModel order))
+                    if (ordersOld.TryTake(out OrderViewModel order))
                     {
-                        orderLogic.TakeOrderInWork(new ChangeStatusBindingModel
-                        { OrderId = order.Id, ImplementerId = implementer.Id });
-
-                        Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) * order.Count * 1000);
-                        orderLogic.FinishOrder(new ChangeStatusBindingModel
-                        { OrderId = order.Id });
-                        Thread.Sleep(implementer.PauseTime * 1000);
+                        if (orderLogic.TakeOrderInWork(new ChangeStatusBindingModel
+                        { OrderId = order.Id, ImplementerId = implementer.Id }))
+                        {
+                            Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) * order.Count * 1000);
+                            orderLogic.FinishOrder(new ChangeStatusBindingModel
+                            { OrderId = order.Id });
+                            Thread.Sleep(implementer.PauseTime * 1000);
+                        }
+                    }
+                }
+                while (!ordersNew.IsEmpty)
+                {
+                    if (ordersNew.TryTake(out OrderViewModel order))
+                    {
+                        if (orderLogic.TakeOrderInWork(new ChangeStatusBindingModel
+                        { OrderId = order.Id, ImplementerId = implementer.Id }))
+                        {
+                            Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) * order.Count * 1000);
+                            orderLogic.FinishOrder(new ChangeStatusBindingModel
+                            { OrderId = order.Id });
+                            Thread.Sleep(implementer.PauseTime * 1000);
+                        }
                     }
                 }
             });

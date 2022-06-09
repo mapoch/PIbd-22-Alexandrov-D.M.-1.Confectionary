@@ -12,7 +12,7 @@ namespace ConfectionaryContracts.BusinessLogicContracts
 
         void CreateOrder(CreateOrderBindingModel model);
 
-        void TakeOrderInWork(ChangeStatusBindingModel model);
+        bool TakeOrderInWork(ChangeStatusBindingModel model);
 
         void FinishOrder(ChangeStatusBindingModel model);
 

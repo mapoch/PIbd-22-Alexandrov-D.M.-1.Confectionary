@@ -42,18 +42,36 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
             orderStorage.Insert(order);
         }
 
-        public void TakeOrderInWork(ChangeStatusBindingModel model)
+        public bool TakeOrderInWork(ChangeStatusBindingModel model)
         {
+            bool success = false;
+
             var element = orderStorage.GetElement(new OrderBindingModel { Id = model.OrderId });
 
             if (element == null) throw new Exception("Элемент не найден");
 
-            if (!element.Status.Contains(OrderStatus.Принят.ToString())) throw new Exception("Не в статусе \"Принят\"");
-            
-            orderStorage.Update(new OrderBindingModel { Id = model.OrderId, Status = OrderStatus.Выполняется, PastryId = element.PastryId,
-                Count = element.Count, Sum = element.Sum, DateCreate = element.DateCreate, DateImplement = DateTime.Now, ClientId = element.ClientId,
-                ImplementerId = model.ImplementerId
-            });
+            if (!(element.Status.Contains(OrderStatus.Принят.ToString()) || element.Status.Contains(OrderStatus.Требуются_материалы.ToString()))) 
+                throw new Exception("Не в статусе \"Принят\" или \"Требуются материалы\"");
+
+            OrderBindingModel order = new OrderBindingModel
+            {
+                Id = model.OrderId,
+                Status = OrderStatus.Требуются_материалы,
+                PastryId = element.PastryId,
+                Count = element.Count,
+                Sum = element.Sum,
+                DateCreate = element.DateCreate
+            };
+
+            if (warehouseStorage.IsEnough(order)) { 
+                order.Status = OrderStatus.Выполняется;
+                order.DateImplement = DateTime.Now;
+                order.ImplementerId = model.ImplementerId;
+                success = true;
+            }
+
+            orderStorage.Update(order);
+            return success;
         }
 
         public void FinishOrder(ChangeStatusBindingModel model)
@@ -62,7 +80,8 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
 
             if (element == null) throw new Exception("Элемент не найден");
 
-            if (!element.Status.Contains(OrderStatus.Выполняется.ToString())) throw new Exception("Не в статусе \"Выполняется\"");
+            if (!element.Status.Contains(OrderStatus.Выполняется.ToString())) 
+                throw new Exception("Не в статусе \"Выполняется\"");
 
             orderStorage.Update(new OrderBindingModel { Id = model.OrderId, Status = OrderStatus.Готов, DateImplement = element.DateImplement,
                 PastryId = element.PastryId, Count = element.Count, Sum = element.Sum, DateCreate = element.DateCreate, ClientId = element.ClientId,
