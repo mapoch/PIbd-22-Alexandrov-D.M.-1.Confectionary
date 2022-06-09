@@ -11,6 +11,7 @@ namespace ConfectionaryListImplement
         public List<Component> Components { get; set; }
         public List<Order> Orders { get; set; }
         public List<Pastry> Pastries { get; set; }
+        public List<Client> Clients { get; set; }
         public List<Warehouse> Warehouses { get; set; }
 
         private DataListSingleton()
@@ -18,6 +19,7 @@ namespace ConfectionaryListImplement
             Components = new List<Component>();
             Orders = new List<Order>();
             Pastries = new List<Pastry>();
+            Clients = new List<Client>();
             Warehouses = new List<Warehouse>();
         }
 

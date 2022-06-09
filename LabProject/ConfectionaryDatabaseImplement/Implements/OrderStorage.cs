@@ -16,7 +16,7 @@ namespace ConfectionaryDatabaseImplement.Implements
         public List<OrderViewModel> GetFullList()
         {
             using var context = new ConfectionaryDatabase();
-            return context.Orders.Include(rec => rec.Pastry).Select(CreateModel).ToList();
+            return context.Orders.Include(rec => rec.Pastry).Include(rec => rec.Client).Select(CreateModel).ToList();
         }
 
         public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
@@ -27,9 +27,12 @@ namespace ConfectionaryDatabaseImplement.Implements
             }
 
             using var context = new ConfectionaryDatabase();
-            return context.Orders.Include(rec => rec.Pastry).Where(rec => (model.Id.HasValue && rec.Id.Equals(model.Id)) ||
-            (model.DateFrom.HasValue && model.DateTo.HasValue &&
-                    rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)).Select(CreateModel).ToList();
+            return context.Orders.Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue
+                && rec.DateCreate.Date == model.DateCreate.Date) ||
+                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date
+                && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
+                (model.ClientId.HasValue && rec.ClientId == model.ClientId))
+                .Include(rec => rec.Pastry).Include(rec => rec.Client).Select(CreateModel).ToList();
         }
 
         public OrderViewModel GetElement(OrderBindingModel model)
@@ -40,7 +43,7 @@ namespace ConfectionaryDatabaseImplement.Implements
             }
 
             using var context = new ConfectionaryDatabase();
-            var order = context.Orders.Include(rec => rec.Pastry).
+            var order = context.Orders.Include(rec => rec.Pastry).Include(rec => rec.Client).
                 FirstOrDefault(rec => rec.PastryId == model.PastryId || rec.Id == model.Id);
             return order != null ? CreateModel(order) : null;
         }
@@ -90,6 +93,8 @@ namespace ConfectionaryDatabaseImplement.Implements
             order.Status = model.Status;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
+            order.ClientId = model.ClientId.Value;
+            order.Client = context.Clients.FirstOrDefault(rec => rec.Id == model.ClientId);
             return order;
         }
 
@@ -104,7 +109,9 @@ namespace ConfectionaryDatabaseImplement.Implements
                 Sum = order.Sum,
                 Status = order.Status.ToString(),
                 DateCreate = order.DateCreate,
-                DateImplement = order.DateImplement
+                DateImplement = order.DateImplement,
+                ClientId = order.ClientId,
+                ClientFIO = order.Client.FIO
             };
         }
     }

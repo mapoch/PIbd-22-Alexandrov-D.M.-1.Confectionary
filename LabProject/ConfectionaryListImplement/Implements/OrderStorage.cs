@@ -32,9 +32,10 @@ namespace ConfectionaryListImplement.Implements
             var result = new List<OrderViewModel>();
             foreach (var order in source.Orders)
             {
-                if ((model.Id.HasValue && order.Id.Equals(model.Id)) ||
+                if ((!model.DateFrom.HasValue && !model.DateTo.HasValue && order.DateCreate.Date == model.DateCreate.Date) || 
                     (model.DateFrom.HasValue && model.DateTo.HasValue &&
-                    order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo))
+                    order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo) ||
+                    (model.ClientId.HasValue && order.ClientId == model.ClientId))
                     result.Add(CreateModel(order));
             }
             return result;
@@ -98,6 +99,7 @@ namespace ConfectionaryListImplement.Implements
             order.Status = model.Status;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
+            order.ClientId = model.ClientId;
             return order;
         }
 
@@ -112,6 +114,15 @@ namespace ConfectionaryListImplement.Implements
                     break;
                 }
             }
+            string clientFIO = null;
+            foreach (Client client in source.Clients)
+            {
+                if (client.Id == order.ClientId)
+                {
+                    clientFIO = client.FIO;
+                    break;
+                }
+            }
             return new OrderViewModel { Id = order.Id,
                 PastryId = order.PastryId,
                 PastryName = pastryName,
@@ -119,7 +130,9 @@ namespace ConfectionaryListImplement.Implements
                 Sum = order.Sum, 
                 Status = order.Status.ToString(), 
                 DateCreate = order.DateCreate, 
-                DateImplement = order.DateImplement
+                DateImplement = order.DateImplement,
+                ClientId = order.ClientId.Value,
+                ClientFIO = clientFIO
             };
         }
     }
