@@ -198,5 +198,11 @@ namespace ConfectionaryView
             var form = Program.Container.Resolve<FormReportComponentPastry>();
             form.ShowDialog();
         }
+
+        private void клиентыToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormClients>();
+            form.ShowDialog();
+        }
     }
 }

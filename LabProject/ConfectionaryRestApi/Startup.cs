@@ -33,10 +33,14 @@ namespace ConfectionaryRestApi
             services.AddTransient<IClientStorage, ClientStorage>();
             services.AddTransient<IOrderStorage, OrderStorage>();
             services.AddTransient<IPastryStorage, PastryStorage>();
+            services.AddTransient<IWarehouseStorage, WarehouseStorage>();
+            services.AddTransient<IComponentStorage, ComponentStorage>();
 
             services.AddTransient<IClientLogic, ClientLogic>();
             services.AddTransient<IOrderLogic, OrderLogic>();
             services.AddTransient<IPastryLogic, PastryLogic>();
+            services.AddTransient<IWarehouseLogic, WarehouseLogic>();
+            services.AddTransient<IComponentLogic, ComponentLogic>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
