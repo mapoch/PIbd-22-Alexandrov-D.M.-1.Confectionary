@@ -4,14 +4,16 @@ using ConfectionaryDatabaseImplement;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConfectionaryDatabaseImplement.Migrations
 {
     [DbContext(typeof(ConfectionaryDatabase))]
-    partial class ConfectionaryDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20220420072743_Mig-6lab")]
+    partial class Mig6lab
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,7 +90,7 @@ namespace ConfectionaryDatabaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ClientId")
+                    b.Property<int?>("ClientId")
                         .HasColumnType("int");
 
                     b.Property<int>("Count")
@@ -167,61 +169,11 @@ namespace ConfectionaryDatabaseImplement.Migrations
                     b.ToTable("PastryComponents");
                 });
 
-            modelBuilder.Entity("ConfectionaryDatabaseImplement.Models.Warehouse", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DateCreate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Manager")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Warehouses");
-                });
-
-            modelBuilder.Entity("ConfectionaryDatabaseImplement.Models.WarehouseComponent", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ComponentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WarehouseId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ComponentId");
-
-                    b.HasIndex("WarehouseId");
-
-                    b.ToTable("WarehouseComponents");
-                });
-
             modelBuilder.Entity("ConfectionaryDatabaseImplement.Models.Order", b =>
                 {
                     b.HasOne("ConfectionaryDatabaseImplement.Models.Client", "Client")
                         .WithMany("Orders")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClientId");
 
                     b.HasOne("ConfectionaryDatabaseImplement.Models.Implementer", "Implementer")
                         .WithMany("Orders")
@@ -264,30 +216,9 @@ namespace ConfectionaryDatabaseImplement.Migrations
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("ConfectionaryDatabaseImplement.Models.WarehouseComponent", b =>
-                {
-                    b.HasOne("ConfectionaryDatabaseImplement.Models.Component", "Component")
-                        .WithMany("WarehouseComponents")
-                        .HasForeignKey("ComponentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ConfectionaryDatabaseImplement.Models.Warehouse", "Warehouse")
-                        .WithMany("WarehouseComponents")
-                        .HasForeignKey("WarehouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Component");
-
-                    b.Navigation("Warehouse");
-                });
-
             modelBuilder.Entity("ConfectionaryDatabaseImplement.Models.Component", b =>
                 {
                     b.Navigation("PastryComponents");
-
-                    b.Navigation("WarehouseComponents");
                 });
 
             modelBuilder.Entity("ConfectionaryDatabaseImplement.Models.Implementer", b =>
@@ -300,11 +231,6 @@ namespace ConfectionaryDatabaseImplement.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("PastryComponents");
-                });
-
-            modelBuilder.Entity("ConfectionaryDatabaseImplement.Models.Warehouse", b =>
-                {
-                    b.Navigation("WarehouseComponents");
                 });
 #pragma warning restore 612, 618
         }

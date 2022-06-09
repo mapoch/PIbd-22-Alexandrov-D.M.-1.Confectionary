@@ -14,6 +14,7 @@ namespace ConfectionaryDatabaseImplement.Models
         public int Id { get; set; }
         public int PastryId { get; set; }
         public int ClientId { get; set; }
+        public int? ImplementerId { get; set; }
 
         [Required]
         public int Count { get; set; }
@@ -31,5 +32,6 @@ namespace ConfectionaryDatabaseImplement.Models
         public virtual Pastry Pastry { get; set; }
 
         public virtual Client Client { get; set; }
+        public virtual Implementer Implementer { get; set; }
     }
 }
