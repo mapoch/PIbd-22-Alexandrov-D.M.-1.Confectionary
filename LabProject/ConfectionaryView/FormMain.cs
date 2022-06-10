@@ -45,7 +45,6 @@ namespace ConfectionaryView
                 dataGridViewOrders.Columns[1].Visible = false;
                 dataGridViewOrders.Columns[2].Visible = false;
                 dataGridViewOrders.Columns[4].Visible = false;
-                dataGridViewOrders.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
             catch (Exception ex)
             {

@@ -50,7 +50,7 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
 
             if (element == null) throw new Exception("Элемент не найден");
 
-            if (!(element.Status.Contains(OrderStatus.Принят.ToString()) || element.Status.Contains(OrderStatus.Требуются_материалы.ToString()))) 
+            if (!(element.Status.Contains(OrderStatus.Принят.ToString()) || element.Status.Contains(OrderStatus.Требуются_материалы.ToString())))
                 throw new Exception("Не в статусе \"Принят\" или \"Требуются материалы\"");
 
             OrderBindingModel order = new OrderBindingModel
@@ -60,13 +60,14 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
                 PastryId = element.PastryId,
                 Count = element.Count,
                 Sum = element.Sum,
-                DateCreate = element.DateCreate
+                DateCreate = element.DateCreate,
+                ClientId = element.ClientId,
+                DateImplement = DateTime.Now,
+                ImplementerId = model.ImplementerId
             };
 
             if (warehouseStorage.IsEnough(order)) { 
                 order.Status = OrderStatus.Выполняется;
-                order.DateImplement = DateTime.Now;
-                order.ImplementerId = model.ImplementerId;
                 success = true;
             }
 

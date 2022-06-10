@@ -33,7 +33,8 @@ namespace ConfectionaryDatabaseImplement.Implements
                 (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date
                 && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
                 (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
-                (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId) ||
+                ((model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId) &&
+                (model.Status == rec.Status)) ||
                 (model.SearchStatus.HasValue && model.SearchStatus.Value == rec.Status))
                 .Include(rec => rec.Pastry).Include(rec => rec.Client).Include(rec => rec.Implementer)
                 .Select(CreateModel).ToList();
@@ -119,7 +120,7 @@ namespace ConfectionaryDatabaseImplement.Implements
                 ClientId = order.ClientId,
                 ClientFIO = order.Client.FIO,
                 ImplementerId = order.ImplementerId,
-                ImplementerFIO = order.Implementer.FIO
+                ImplementerFIO = (order.Implementer != null) ? order.Implementer.FIO : null
             };
         }
     }
