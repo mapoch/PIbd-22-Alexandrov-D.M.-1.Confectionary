@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using ConfectionaryBusinessLogic.BusinessLogics;
 using ConfectionaryContracts.BusinessLogicContracts;
 using ConfectionaryContracts.StoragesContracts;
@@ -43,6 +44,7 @@ namespace ConfectionaryRestApi
             services.AddTransient<IComponentLogic, ComponentLogic>();
 
             services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ConfectionaryRestApi", Version = "v1" });
