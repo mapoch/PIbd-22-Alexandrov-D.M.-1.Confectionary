@@ -36,7 +36,8 @@ namespace ConfectionaryListImplement.Implements
                     || (model.DateFrom.HasValue && model.DateTo.HasValue &&
                     order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo) || 
                     (model.ClientId.HasValue && order.ClientId == model.ClientId) ||
-                    (model.ImplementerId.HasValue && order.ImplementerId == model.ImplementerId) ||
+                    ((model.ImplementerId.HasValue && order.ImplementerId == model.ImplementerId) &&
+                    (model.Status == order.Status)) ||
                     (model.SearchStatus.HasValue && model.SearchStatus.Value == order.Status))
                     result.Add(CreateModel(order));
             }
