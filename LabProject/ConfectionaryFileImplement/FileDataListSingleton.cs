@@ -15,11 +15,13 @@ namespace ConfectionaryFileImplement
         private readonly string ComponentFileName = "Component.xml";
         private readonly string OrderFileName = "Order.xml";
         private readonly string PastryFileName = "Pastry.xml";
+        private readonly string ClientFileName = "Client.xml";
         private readonly string WarehouseFileName = "Warehouse.xml";
 
         public List<Component> Components { get; set; }
         public List<Order> Orders { get; set; }
         public List<Pastry> Pastries { get; set; }
+        public List<Client> Clients { get; set; }
         public List<Warehouse> Warehouses { get; set; }
 
         private FileDataListSingleton()
@@ -27,6 +29,7 @@ namespace ConfectionaryFileImplement
             Components = LoadComponents();
             Orders = LoadOrders();
             Pastries = LoadPastries();
+            Clients = LoadClients();
             Warehouses = LoadWarehouses();
         }
 
@@ -41,6 +44,7 @@ namespace ConfectionaryFileImplement
             SaveComponents();
             SaveOrders();
             SavePastries();
+            SaveClients();
             SaveWarehouses();
         }
 
@@ -99,7 +103,8 @@ namespace ConfectionaryFileImplement
                         Sum = Convert.ToDecimal(elem.Element("Sum").Value),
                         Status = orderStatus,
                         DateCreate = Convert.ToDateTime(elem.Element("DateCreate").Value),
-                        DateImplement = orderDateImplement
+                        DateImplement = orderDateImplement,
+                        ClientId = Convert.ToInt32(elem.Attribute("ClientId").Value)
                     });
                 }
             }
@@ -130,6 +135,29 @@ namespace ConfectionaryFileImplement
                         PastryName = elem.Element("PastryName").Value,
                         Price = Convert.ToDecimal(elem.Element("Price").Value),
                         PastryComponents = pastryComp
+                    });
+                }
+            }
+            return list;
+        }
+
+        private List<Client> LoadClients()
+        {
+            var list = new List<Client>();
+
+            if (File.Exists(ClientFileName))
+            {
+                var xDocument = XDocument.Load(ClientFileName);
+                var xElements = xDocument.Root.Elements("Client").ToList();
+
+                foreach (var elem in xElements)
+                {
+                    list.Add(new Models.Client
+                    {
+                        Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                        FIO = elem.Element("FIO").Value,
+                        Login = elem.Element("Login").Value,
+                        Password = elem.Element("Password").Value
                     });
                 }
             }
@@ -200,7 +228,8 @@ namespace ConfectionaryFileImplement
                         new XElement("Sum", order.Sum),
                         new XElement("Status", order.Status),
                         new XElement("DateCreate", order.DateCreate),
-                        new XElement("DateImplement", order.DateImplement)));
+                        new XElement("DateImplement", order.DateImplement),
+                        new XElement("ClientId", order.ClientId)));
                 }
 
                 var xDocument = new XDocument(xElement);
@@ -231,6 +260,25 @@ namespace ConfectionaryFileImplement
 
                 var xDocument = new XDocument(xElement);
                 xDocument.Save(PastryFileName);
+            }
+        }
+
+        private void SaveClients()
+        {
+            if (Clients != null)
+            {
+                var xElement = new XElement("Clients");
+                foreach (var client in Clients)
+                {
+                    xElement.Add(new XElement("Component",
+                        new XAttribute("Id", client.Id),
+                        new XElement("FIO", client.FIO),
+                        new XElement("Login", client.Login),
+                        new XElement("Password", client.Password)));
+                }
+
+                var xDocument = new XDocument(xElement);
+                xDocument.Save(ComponentFileName);
             }
         }
 

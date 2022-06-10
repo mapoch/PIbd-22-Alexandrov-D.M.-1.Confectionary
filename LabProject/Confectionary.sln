@@ -13,7 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfectionaryView", "Confec
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfectionaryFileImplement", "ConfectionaryFileImplement\ConfectionaryFileImplement.csproj", "{379ED492-8D7E-4B18-92B6-00389B3578C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfectionaryDatabaseImplement", "ConfectionaryDatabaseImplement\ConfectionaryDatabaseImplement.csproj", "{236AF7C2-05CD-4604-9025-E3AEB982B5E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfectionaryDatabaseImplement", "ConfectionaryDatabaseImplement\ConfectionaryDatabaseImplement.csproj", "{236AF7C2-05CD-4604-9025-E3AEB982B5E6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfectionaryRestApi", "ConfectionaryRestApi\ConfectionaryRestApi.csproj", "{65E96256-5E46-4A45-8C6B-F705BF7C3390}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfectionaryClientApp", "ConfectionaryClientApp\ConfectionaryClientApp.csproj", "{7D13EEE8-CA32-4D56-8C84-936CC9D12820}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfectionaryWarehouseApp", "ConfectionaryWarehouseApp\ConfectionaryWarehouseApp.csproj", "{08AA3005-9AA7-4C6D-B5A5-D7CA4CDDBA20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +51,18 @@ Global
 		{236AF7C2-05CD-4604-9025-E3AEB982B5E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{236AF7C2-05CD-4604-9025-E3AEB982B5E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{236AF7C2-05CD-4604-9025-E3AEB982B5E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65E96256-5E46-4A45-8C6B-F705BF7C3390}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65E96256-5E46-4A45-8C6B-F705BF7C3390}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65E96256-5E46-4A45-8C6B-F705BF7C3390}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65E96256-5E46-4A45-8C6B-F705BF7C3390}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D13EEE8-CA32-4D56-8C84-936CC9D12820}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D13EEE8-CA32-4D56-8C84-936CC9D12820}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D13EEE8-CA32-4D56-8C84-936CC9D12820}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D13EEE8-CA32-4D56-8C84-936CC9D12820}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08AA3005-9AA7-4C6D-B5A5-D7CA4CDDBA20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08AA3005-9AA7-4C6D-B5A5-D7CA4CDDBA20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08AA3005-9AA7-4C6D-B5A5-D7CA4CDDBA20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08AA3005-9AA7-4C6D-B5A5-D7CA4CDDBA20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
