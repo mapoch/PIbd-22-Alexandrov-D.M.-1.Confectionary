@@ -131,29 +131,9 @@ namespace ConfectionaryBusinessLogic.BusinessLogics
 
         public List<ReportDatesViewModel> GetDates(ReportBindingModel model)
         {
-            var sourceList = orderStorage.GetFullList().Select(x => new ReportOrdersViewModel
-            { DateCreate = x.DateCreate, Sum = x.Sum })
-           .ToList();
+            var list = orderStorage.GetFullList().GroupBy(rec => rec.DateCreate.Date).
+                Select(rec => new ReportDatesViewModel { Date = rec.Key.Date.Date, Count = rec.Count(), Sum = rec.Sum(order => order.Sum)}).ToList();
 
-            List<ReportDatesViewModel> list = new List<ReportDatesViewModel>();
-            foreach (var order in sourceList)
-            {
-                var element = list.FirstOrDefault(rec => rec.Date.Date == order.DateCreate.Date);
-                if (element == null)
-                {
-                    list.Add(new ReportDatesViewModel 
-                    { 
-                        Date = order.DateCreate,
-                        Count = 1,
-                        Sum = order.Sum
-                    });
-                }
-                else
-                {
-                    element.Count++;
-                    element.Sum += order.Sum;
-                }
-            }
             return list;
         }
 
