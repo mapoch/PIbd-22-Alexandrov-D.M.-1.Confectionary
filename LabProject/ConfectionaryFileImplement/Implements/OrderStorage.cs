@@ -26,7 +26,10 @@ namespace ConfectionaryFileImplement.Implements
         public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
         {
             if (model == null) return null;
-            return source.Orders.Where(rec => rec.Id.Equals(model.Id))
+
+            return source.Orders.Where(rec => (model.Id.HasValue && rec.Id.Equals(model.Id)) ||
+            (model.DateFrom.HasValue && model.DateTo.HasValue &&
+                    rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo))
                 .Select(CreateModel).ToList();
         }
 
