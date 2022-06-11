@@ -12,6 +12,7 @@ namespace ConfectionaryListImplement
         public List<Order> Orders { get; set; }
         public List<Pastry> Pastries { get; set; }
         public List<Client> Clients { get; set; }
+        public List<Implementer> Implementers { get; set; }
         public List<Warehouse> Warehouses { get; set; }
 
         private DataListSingleton()
@@ -20,6 +21,7 @@ namespace ConfectionaryListImplement
             Orders = new List<Order>();
             Pastries = new List<Pastry>();
             Clients = new List<Client>();
+            Implementers = new List<Implementer>();
             Warehouses = new List<Warehouse>();
         }
 

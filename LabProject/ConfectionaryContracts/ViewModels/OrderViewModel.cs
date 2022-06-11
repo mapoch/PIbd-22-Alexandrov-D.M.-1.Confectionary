@@ -12,7 +12,11 @@ namespace ConfectionaryContracts.ViewModels
         public int ClientId { get; set; }
 
         [DisplayName("Клиент")]
-        public string ClientFIO { get; set; }
+        public string? ClientFIO { get; set; }
+        public int? ImplementerId { get; set; }
+
+        [DisplayName("Исполнитель")]
+        public string ImplementerFIO { get; set; }
 
         [DisplayName("Изделие")]
         public string PastryName { get; set; }

@@ -17,5 +17,7 @@ namespace ConfectionaryContracts.BindingModels
         public DateTime? DateFrom { get; set; }
         public DateTime? DateTo { get; set; }
         public int? ClientId { get; set; }
+        public int? ImplementerId { get; set; }
+        public OrderStatus? SearchStatus { get; set; }
     }
 }
